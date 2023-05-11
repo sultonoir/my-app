@@ -1,6 +1,6 @@
-import getCurrentUser from "../actions/getCurrentUser";
-import getListing from "../actions/getListings";
-import EmptyState from "../components/EmptyState";
+import getCurrentUser from "../../components/actions/getCurrentUser";
+import getListing from "../../components/actions/getListings";
+import EmptyState from "../../components/shared/EmptyState";
 import PropertiesClient from "./PropertiesClient";
 
 const TripsPage = async () => {

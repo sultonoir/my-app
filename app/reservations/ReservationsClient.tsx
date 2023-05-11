@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { SafeReservation, SafeUser } from "../types";
+import { SafeReservation, SafeUser } from "../../types";
 import { useCallback, useState } from "react";
-import Container from "../components/Container";
-import Heading from "../components/Heading";
+import Container from "../../components/shared/Container";
+import Heading from "../../components/shared/Heading";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import ListingCard from "../components/listing/Listingcard";
+import ListingCard from "../../components/listing/Listingcard";
 
 interface ReservationsClientProps {
   currentUser: SafeUser | null;

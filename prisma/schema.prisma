@@ -7,12 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String     @unique
+  emailVerified   DateTime?
+  image           String?
+  hashedPassword  String?
+  notification    Boolean?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  listings        Listing[]
+  reservations    Reservation[]
+  user            User[]
+}
+
 model User {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
   name              String?
   email             String?   @unique
   emailVerified     DateTime?
   image             String?
+  notification      Boolean?
   hashedPassword    String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -20,10 +36,13 @@ model User {
   accounts          Account[]
   listings          Listing[]
   reservations      Reservation[]
+  adminId           String?     @db.ObjectId
+  admin             Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
   userId             String   @db.ObjectId
   type               String
   provider           String
@@ -35,7 +54,7 @@ model Account {
   scope              String?
   id_token           String?  @db.String
   session_state      String?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
 
@@ -46,6 +65,9 @@ model Listing {
   imageSrc        String[]
   createdAt       DateTime @default(now())
   category        String
+  adult           Int?
+  kids            Int?
+  children        Int?
   roomCount       Int
   bathroomCount   Int
   guestCount      Int
@@ -53,7 +75,10 @@ model Listing {
   userId String   @db.ObjectId
   price           Int
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
+  reservations    Reservation[]
+  adminId         String?     @db.ObjectId
+  admin           Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
 }
 
 model Reservation {
@@ -66,4 +91,7 @@ model Reservation {
   createdAt       DateTime @default(now())
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing         Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  adminId         String?     @db.ObjectId
+  admin           Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
 }

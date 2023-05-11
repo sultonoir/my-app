@@ -1,9 +1,9 @@
-import useCountries from "@/app/hooks/useCountries";
-import { SafeUser } from "@/app/types";
+import useCountries from "@/hooks/useCountries";
+import { SafeUser } from "@/types";
 import React from "react";
-import Heading from "../Heading";
+import Heading from "../shared/Heading";
 import Image from "next/image";
-import HearthButton from "../HeartButton";
+import HearthButton from "../shared/HeartButton";
 
 interface ListingHeadProps {
   title: string;

@@ -1,7 +1,7 @@
 "use client";
 import { Range } from "react-date-range";
 import Calender from "../inputs/Calendar";
-import Button from "../Button";
+import Button from "../shared/Button";
 interface ListingReservationProps {
   price: number;
   dateRange: Range;

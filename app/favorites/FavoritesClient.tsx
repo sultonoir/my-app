@@ -1,8 +1,8 @@
 "use client";
 
-import Container from "../components/Container";
-import ListingCard from "../components/listing/Listingcard";
-import { SafeListing, SafeUser } from "../types";
+import Container from "../../components/shared/Container";
+import ListingCard from "../../components/listing/Listingcard";
+import { SafeListing, SafeUser } from "../../types";
 
 interface FavoritesClientProps {
   currentUser: SafeUser | null;

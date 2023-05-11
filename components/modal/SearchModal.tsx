@@ -7,12 +7,12 @@ import { Range } from "react-date-range";
 import { formatISO } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import useSearchModal from "@/app/hooks/useSearchModal";
+import useSearchModal from "@/hooks/useSearchModal";
 
 import Modal from "./Modal";
 import Counter from "../inputs/Counter";
 import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
-import Heading from "../Heading";
+import Heading from "../shared/Heading";
 import Calendar from "../inputs/Calendar";
 
 enum STEPS {
@@ -40,7 +40,7 @@ const SearchModal = () => {
 
   const Map = useMemo(
     () =>
-      dynamic(() => import("../Map"), {
+      dynamic(() => import("../shared/Map"), {
         ssr: false,
       }),
     [location]

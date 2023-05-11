@@ -1,6 +1,6 @@
-import getCurrentUser from "../actions/getCurrentUser";
-import getFavotiteListing from "../actions/getFavoriteListing";
-import EmptyState from "../components/EmptyState";
+import getCurrentUser from "../../components/actions/getCurrentUser";
+import getFavotiteListing from "../../components/actions/getFavoriteListing";
+import EmptyState from "../../components/shared/EmptyState";
 import FavoritesClient from "./FavoritesClient";
 
 const favoriteListing = async () => {

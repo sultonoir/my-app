@@ -1,9 +1,9 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import getLIstingById from "@/app/actions/getListingById";
-import EmptyState from "@/app/components/EmptyState";
+import getCurrentUser from "@/components/actions/getCurrentUser";
+import getLIstingById from "@/components/actions/getListingById";
+import EmptyState from "@/components/shared/EmptyState";
 import React from "react";
 import ListingClient from "./ListingClient";
-import getReservations from "@/app/actions/getReservations";
+import getReservations from "@/components/actions/getReservations";
 
 interface Iparams {
   listingId?: string;

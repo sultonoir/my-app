@@ -1,7 +1,7 @@
 "use client";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { SafeUser } from "../types";
-import useFavorite from "../hooks/useFavorite";
+import { SafeUser } from "../../types";
+import useFavorite from "../../hooks/useFavorite";
 
 type Props = {
   listingId: string;
