@@ -37,6 +37,11 @@ const ListingClient: React.FC<ListingClientProps> = ({
 }) => {
   const loginModal = useLoginModal();
   const router = useRouter();
+  const newData = {
+    ...listing,
+    imageSrc: listing.imageSrc.map((src) => ({ name: src })),
+    fasilitas: listing.fasilitas.map((src) => ({ item: src })),
+  };
 
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
@@ -110,7 +115,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         <div className="flex flex-col gap-6">
           <ListingHead
             title={listing.title}
-            imageSrc={listing.imageSrc}
+            imageSrc={newData.imageSrc}
             locationValue={listing.locationValue}
             id={listing.id}
             currentUser={currentUser}
@@ -132,6 +137,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               guestCount={listing.guestCount}
               bathroomCount={listing.bathroomCount}
               locationValue={listing.locationValue}
+              fasilitas={newData.fasilitas}
             />
             <div
               className="

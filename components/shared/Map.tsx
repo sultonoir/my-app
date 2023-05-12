@@ -1,4 +1,3 @@
-"use client";
 import L from "leaflet";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -17,13 +16,14 @@ L.Icon.Default.mergeOptions({
 interface mapProps {
   center: number[] | undefined;
 }
+
 const Map: React.FC<mapProps> = ({ center }) => {
   return (
     <MapContainer
-      center={(center as L.LatLngExpression) || [51, -0.09]}
-      zoom={center ? 4 : 2}
+      center={(center as L.LatLngExpression) || [0.7893, 113.9213]}
+      zoom={center ? 12 : 4}
       scrollWheelZoom={false}
-      className="h-[35vh] rounded-lg"
+      className="h-[35vh] rounded-lg z-0"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

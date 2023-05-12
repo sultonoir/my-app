@@ -9,10 +9,15 @@ interface Iparams {
   listingId?: string;
 }
 
+export interface latlngProp {
+  latlng: number[];
+}
+
 const page = async ({ params }: { params: Iparams }) => {
   const listing = await getLIstingById(params);
   const currentUser = await getCurrentUser();
   const reservations = await getReservations(params);
+
   if (!listing) {
     return <EmptyState />;
   }

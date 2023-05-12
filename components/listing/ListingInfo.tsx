@@ -1,13 +1,11 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
-
-import useCountries from "@/hooks/useCountries";
 import { SafeUser } from "@/types";
-
 import Avatar from "../shared/Avatar";
 import ListingCategory from "./ListingCategory";
+import { useEffect, useMemo, useState } from "react";
+import { getRegencyByName } from "territory-indonesia";
+import Facility from "./Facility";
 
 const Map = dynamic(() => import("../shared/Map"), {
   ssr: false,
@@ -27,6 +25,9 @@ interface ListingInfoProps {
         description: string;
       }
     | undefined;
+  fasilitas: {
+    item: string;
+  }[];
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -37,10 +38,18 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   bathroomCount,
   category,
   locationValue,
+  fasilitas,
 }) => {
-  const { getByValue } = useCountries();
+  const [coordinate, setCoordinate] = useState<any>([]);
 
-  const coordinates = getByValue(locationValue)?.latling;
+  useEffect(() => {
+    const fetch = async () => {
+      const cities = await getRegencyByName(locationValue);
+      const citys = [cities.latitude, cities.longitude];
+      setCoordinate(citys);
+    };
+    fetch();
+  }, []);
 
   return (
     <div className="col-span-4 flex flex-col gap-8">
@@ -63,14 +72,19 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             flex 
             flex-row 
             items-center 
-            gap-4 
             font-light
             text-neutral-500
           "
         >
-          <div>{guestCount} guests</div>
-          <div>{roomCount} rooms</div>
-          <div>{bathroomCount} bathrooms</div>
+          <div className="pr-2 border-r border-neutral-500">
+            {guestCount} Tamu
+          </div>
+          <div className="px-2 border-r border-neutral-500">
+            {roomCount} Kamar
+          </div>
+          <div className="px-2 border-neutral-500">
+            {bathroomCount} Kamar mandi
+          </div>
         </div>
       </div>
       <hr />
@@ -89,7 +103,15 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         {description}
       </div>
       <hr />
-      <Map center={coordinates} />
+      <div className="grid grid-cols-2">
+        {fasilitas.map((item) => (
+          <Facility
+            key={item.item}
+            label={item.item}
+          />
+        ))}
+      </div>
+      {coordinate.length > 0 && <Map center={coordinate} />}
     </div>
   );
 };

@@ -14,27 +14,35 @@ export async function POST(request: Request) {
   const {
     title,
     description,
-    imageSrc,
+    img,
     category,
     roomCount,
     bathroomCount,
-    guestCount,
     location,
     price,
+    kids,
+    adult,
+    children,
+    fasilitas,
   } = body;
+  const { value } = location;
 
   const listing = await prisma.listing.create({
     data: {
       title,
+      kids,
+      adult,
+      children,
       description,
-      imageSrc,
+      imageSrc: img,
       category,
       roomCount,
       bathroomCount,
-      guestCount,
-      locationValue: location.value,
+      guestCount: adult + children + kids,
+      locationValue: value,
       price: parseInt(price, 10),
       userId: currentUser.id,
+      fasilitas,
     },
   });
 

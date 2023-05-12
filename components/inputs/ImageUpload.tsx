@@ -1,27 +1,36 @@
-'use client';
+"use client";
 
-import { CldUploadWidget } from 'next-cloudinary';
-import Image from 'next/image';
-import { useCallback } from 'react';
-import { TbPhotoPlus } from 'react-icons/tb';
+import { CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
+import { useCallback, useState } from "react";
+import { TbPhotoPlus } from "react-icons/tb";
 
 declare global {
   var cloudinary: any;
 }
 
-const uploadPreset = 'ufa5bp0v';
+const uploadPreset = "ufa5bp0v";
 
 interface ImageUploadProps {
-  onChange: (value: string) => void;
-  value: string;
+  onChange: (value: string[]) => void;
+  value: string[];
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
+  const [imageUrl, setImageUrl] = useState("");
+  const [dataImg, setDataImg] = useState<{ name: string }[]>([]);
+
   const handleUpload = useCallback(
     (result: any) => {
-      onChange(result.info.secure_url);
+      const url = result.info.secure_url;
+      const newItem = {
+        name: imageUrl,
+      };
+      setDataImg((prevDataLis) => [...prevDataLis, newItem]);
+      setImageUrl(url);
+      onChange([...value, url]);
     },
-    [onChange]
+    [onChange, value]
   );
 
   return (
@@ -29,13 +38,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
       onUpload={handleUpload}
       uploadPreset={uploadPreset}
       options={{
-        maxFiles: 1,
-      }}>
+        maxFiles: 4,
+      }}
+    >
       {({ open }) => {
         return (
-          <div
-            onClick={() => open?.()}
-            className="
+          <div className="flex flex-col gap-y-4">
+            <div
+              onClick={() => open?.()}
+              className="
               relative
               cursor-pointer
               hover:opacity-70
@@ -50,21 +61,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
               items-center
               gap-4
               text-neutral-600
-            ">
-            <TbPhotoPlus size={50} />
-            <div className="font-semibold text-lg">Click to upload</div>
-            {value && (
-              <div
-                className="
-              absolute inset-0 w-full h-full">
+            "
+            >
+              <TbPhotoPlus size={50} />
+              <div className="font-semibold text-lg">Click to upload</div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
+              {value.map((url) => (
                 <Image
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  src={value}
+                  width={200}
+                  height={300}
+                  src={url}
                   alt="House"
+                  key={url}
+                  className="w-full"
                 />
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         );
       }}
