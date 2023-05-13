@@ -78,6 +78,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
         listingId: listing?.id,
+        status: "pending",
       })
       .then(() => {
         toast.success("Listing reserved!");
@@ -139,6 +140,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               locationValue={listing.locationValue}
               fasilitas={newData.fasilitas}
               title={listing.title}
+              id={listing.id}
             />
             <div
               className="

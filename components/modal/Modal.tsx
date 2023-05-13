@@ -1,12 +1,9 @@
-"use client";
-
-import { useCallback, useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
-
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Button from "../shared/Button";
-
+import { VscClose } from "react-icons/vsc";
 interface ModalProps {
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
   title?: string;
@@ -18,7 +15,7 @@ interface ModalProps {
   secondaryActionLabel?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({
+export default function Modal({
   isOpen,
   onClose,
   onSubmit,
@@ -29,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
-}) => {
+}: ModalProps) {
   const [showModal, setShowModal] = useState(isOpen);
 
   useEffect(() => {
@@ -69,126 +66,85 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      <div
-        className="
-          justify-center 
-          items-center 
-          flex 
-          overflow-x-hidden 
-          overflow-y-auto 
-          fixed 
-          inset-0 
-          z-50 
-          outline-none 
-          focus:outline-none
-          bg-neutral-800/70
-        "
+      <Transition
+        appear
+        show={showModal}
+        as={Fragment}
       >
-        <div
-          className="
-          relative 
-          w-full
-          md:w-4/6
-          lg:w-3/6
-          xl:w-2/5
-          my-6
-          mx-auto 
-          h-full 
-          lg:h-auto
-          md:h-auto
-          "
+        <Dialog
+          as="div"
+          className="relative z-[99]"
+          onClose={handleClose}
         >
-          {/*content*/}
-          <div
-            className={`
-            translate
-            duration-300
-            h-auto
-            ${showModal ? "translate-y-0" : "translate-y-full"}
-            ${showModal ? "opacity-100" : "opacity-0"}
-          `}
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div
-              className="
-              translate
-              h-full
-              lg:h-auto
-              md:h-auto
-              border-0 
-              rounded-lg 
-              shadow-lg 
-              relative 
-              flex 
-              flex-col 
-              w-full 
-              bg-white 
-              outline-none 
-              focus:outline-none
-            "
-            >
-              {/*header*/}
-              <div
-                className="
-                flex 
-                items-center 
-                p-6
-                rounded-t
-                justify-center
-                relative
-                border-b-[1px]
-                "
+            <div className="fixed inset-0 bg-neutral-800/70" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <button
-                  aria-label="memek"
-                  className="
-                    p-1
-                    border-0 
-                    hover:opacity-70
-                    transition
-                    absolute
-                    left-9
-                  "
-                  onClick={handleClose}
-                >
-                  <IoMdClose size={18} />
-                </button>
-                <div className="text-lg font-semibold">{title}</div>
-              </div>
-              {/*body*/}
-              <div className="relative p-6 flex-auto">{body}</div>
-              {/*footer*/}
-              <div className="flex flex-col gap-2 p-6">
-                <div
-                  className="
-                    flex 
-                    flex-row 
-                    items-center 
-                    gap-4 
-                    w-full
-                  "
-                >
-                  {secondaryAction && secondaryActionLabel && (
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900 uppercase text-center mb-2"
+                  >
+                    {title}
+                  </Dialog.Title>
+                  <hr />
+                  <div
+                    onClick={handleClose}
+                    className="absolute top-3 right-3 p-2 hover:bg-[#f1f5f9] rounded-full"
+                  >
+                    <VscClose size={20} />
+                  </div>
+                  <div className="mt-2">{body}</div>
+                  <div className="mt-2 flex flex-row gap-4">
+                    {secondaryAction && secondaryActionLabel && (
+                      <Button
+                        disabled={disabled}
+                        label={secondaryActionLabel}
+                        onClick={handleSecondaryAction}
+                        outline
+                      />
+                    )}
                     <Button
                       disabled={disabled}
-                      label={secondaryActionLabel}
-                      onClick={handleSecondaryAction}
-                      outline
+                      label={actionLabel}
+                      onClick={handleSubmit}
                     />
-                  )}
-                  <Button
-                    disabled={disabled}
-                    label={actionLabel}
-                    onClick={handleSubmit}
-                  />
-                </div>
-                {footer}
-              </div>
+                  </div>
+                  <div className="mt-2 flex flex-col">
+                    {footer && (
+                      <div className="flex justify-center items-center">
+                        <div className="border-t border-gray-400 w-full"></div>
+                        <div className="mx-3">or</div>
+                        <div className="border-t border-gray-400 w-full"></div>
+                      </div>
+                    )}
+                    {footer}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </div>
-        </div>
-      </div>
+        </Dialog>
+      </Transition>
     </>
   );
-};
-
-export default Modal;
+}

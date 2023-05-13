@@ -30,6 +30,7 @@ interface ListingInfoProps {
   fasilitas: {
     item: string;
   }[];
+  id: string;
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -42,6 +43,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   locationValue,
   fasilitas,
   title,
+  id,
 }) => {
   const [coordinate, setCoordinate] = useState<any>([]);
 
@@ -52,7 +54,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
       setCoordinate(citys);
     };
     fetch();
-  }, []);
+  }, [id]);
 
   return (
     <div className="col-span-4 flex flex-col gap-8">
