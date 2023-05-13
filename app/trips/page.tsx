@@ -8,8 +8,8 @@ const TripsPage = async () => {
   if (!currentUser) {
     return (
       <EmptyState
-        title="Unauthorized"
-        subtitle="Please login"
+        title="Tidak terhubung"
+        subtitle="Login terlebih dahulu"
       />
     );
   }
@@ -19,8 +19,8 @@ const TripsPage = async () => {
   if (reservation.length === 0) {
     return (
       <EmptyState
-        title="No trips found"
-        subtitle="Looks loke you havent reserved any trips"
+        title="Tidak ada perjalanan"
+        subtitle="Buat perjalanan terlebih dahulu"
       />
     );
   }

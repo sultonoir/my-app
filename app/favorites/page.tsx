@@ -10,8 +10,8 @@ const favoriteListing = async () => {
   if (listings.length === 0) {
     return (
       <EmptyState
-        title="No favorite found"
-        subtitle="Look like you have no favorite listings"
+        title="Favorite tidak ditemukan"
+        subtitle="Sepertinya Anda tidak memiliki daftar favorit"
       />
     );
   }

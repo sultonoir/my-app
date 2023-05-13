@@ -1,8 +1,6 @@
-import useCountries from "@/hooks/useCountries";
 import { SafeUser } from "@/types";
 import React from "react";
 import Heading from "../shared/Heading";
-import Image from "next/image";
 import HearthButton from "../shared/HeartButton";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,14 +25,8 @@ const ListingHead: React.FC<ListingHeadProps> = ({
   id,
   currentUser,
 }) => {
-  const { getByValue } = useCountries();
-  const location = getByValue(locationValue);
   return (
     <>
-      <Heading
-        title={title}
-        subtitle={locationValue}
-      />
       <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
         <Swiper
           spaceBetween={30}
@@ -70,7 +62,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
             <BiChevronRight size={20} />
           </div>
         </Swiper>
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 right-3 z-10">
           <HearthButton
             listingId={id}
             currentUser={currentUser}

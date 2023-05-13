@@ -1,20 +1,33 @@
 "use client";
-
 import Image from "next/image";
+import { useState } from "react";
+
 interface AvatarProps {
   src?: string | null | undefined;
+  alt?: string | null | undefined;
 }
 
-const Avatar = ({ src }: AvatarProps) => {
+const AvatarCom = ({ src, alt }: AvatarProps) => {
+  const [isLoading, setLoading] = useState(true);
   return (
     <Image
-      alt="Avatar"
+      src={src || `/placeholder.jpg`}
+      alt={alt || "avatar"}
       width={40}
       height={40}
-      src={src || `/placeholder.jpg`}
-      className="rounded-full"
+      priority
+      sizes="100%"
+      style={{ objectFit: "cover" }}
+      className={`
+              duration-700 ease-in-out group-hover:scale-110 rounded-full p-[2px]
+              ${
+                isLoading
+                  ? "scale-110 blur-2xl grayscale"
+                  : "scale-100 blur-0 grayscale-0"
+              })`}
+      onLoadingComplete={() => setLoading(false)}
     />
   );
 };
 
-export default Avatar;
+export default AvatarCom;

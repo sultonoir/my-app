@@ -1,11 +1,12 @@
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 import { SafeUser } from "@/types";
-import Avatar from "../shared/Avatar";
+import { GoLocation } from "react-icons/go";
 import ListingCategory from "./ListingCategory";
 import { useEffect, useMemo, useState } from "react";
 import { getRegencyByName } from "territory-indonesia";
 import Facility from "./Facility";
+import Avatar from "../shared/Avatar";
 
 const Map = dynamic(() => import("../shared/Map"), {
   ssr: false,
@@ -13,6 +14,7 @@ const Map = dynamic(() => import("../shared/Map"), {
 
 interface ListingInfoProps {
   user: SafeUser;
+  title: string;
   description: string;
   guestCount: number;
   roomCount: number;
@@ -39,6 +41,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   category,
   locationValue,
   fasilitas,
+  title,
 }) => {
   const [coordinate, setCoordinate] = useState<any>([]);
 
@@ -53,39 +56,26 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
 
   return (
     <div className="col-span-4 flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <div
-          className="
-            text-xl 
-            font-semibold 
-            flex 
-            flex-row 
-            items-center
-            gap-2
-          "
-        >
-          <div>Hosted by {user?.name}</div>
-          <Avatar src={user?.image} />
-        </div>
-        <div
-          className="
-            flex 
-            flex-row 
-            items-center 
-            font-light
-            text-neutral-500
-          "
-        >
-          <div className="pr-2 border-r border-neutral-500">
-            {guestCount} Tamu
+      <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-2">
+          <div className="text-xl font-semibold uppercase ">
+            {title} | Tuan rumah {user?.name}
           </div>
-          <div className="px-2 border-r border-neutral-500">
-            {roomCount} Kamar
+          <div className="flex flex-row items-center gap-2 text-neutral-500">
+            <GoLocation />
+            {locationValue}
           </div>
-          <div className="px-2 border-neutral-500">
-            {bathroomCount} Kamar mandi
+          <div className="flex flex-row items-center text-neutral-500">
+            <span className="pr-2 border-r border-neutral">
+              {guestCount} Tamu
+            </span>
+            <span className="px-2 border-r border-neutral">
+              {roomCount} Kamar tidur
+            </span>
+            <span className="px-2">{bathroomCount} Kamar mandi </span>
           </div>
         </div>
+        <Avatar src={user?.image} />
       </div>
       <hr />
       {category && (

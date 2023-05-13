@@ -9,16 +9,16 @@ const ReservationsPage = async () => {
   if (!currentUser) {
     return (
       <EmptyState
-        title="Unauthorized"
-        subtitle="Please Login"
+        title="Tidak terhubung"
+        subtitle="Login terlebih dahulu"
       />
     );
   }
   if (reservation.length === 0) {
     return (
       <EmptyState
-        title="No Reservation found"
-        subtitle="Looks like you have no reservation on your profile"
+        title="Reservasi tidak ditemukan"
+        subtitle="Sepertinya Anda tidak memiliki reservasi di profil Anda"
       />
     );
   }
