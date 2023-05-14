@@ -12,6 +12,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
+import { BiUser } from "react-icons/bi";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
@@ -73,6 +74,22 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                         className="pr-2"
                       />
                       Trips
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => router.push(`/user/${currentUser.name}`)}
+                      className={`${
+                        active ? "bg-rose-500 text-white" : "text-primary"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      <BiUser
+                        size={24}
+                        className="pr-2"
+                      />
+                      User
                     </button>
                   )}
                 </Menu.Item>

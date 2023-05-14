@@ -5,17 +5,20 @@ import { useState } from "react";
 interface AvatarProps {
   src?: string | null | undefined;
   alt?: string | null | undefined;
+  width?: number | null | undefined;
+  height?: number | null | undefined;
 }
 
-const AvatarCom = ({ src, alt }: AvatarProps) => {
+const AvatarCom = ({ src, alt, width, height }: AvatarProps) => {
   const [isLoading, setLoading] = useState(true);
   return (
     <Image
       src={src || `/placeholder.jpg`}
       alt={alt || "avatar"}
-      width={40}
-      height={40}
+      width={width || 40}
+      height={height || 40}
       priority
+      quality={100}
       sizes="100%"
       style={{ objectFit: "cover" }}
       className={`
