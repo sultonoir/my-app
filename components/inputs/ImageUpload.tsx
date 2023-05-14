@@ -17,17 +17,9 @@ interface ImageUploadProps {
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [dataImg, setDataImg] = useState<{ name: string }[]>([]);
-
   const handleUpload = useCallback(
     (result: any) => {
       const url = result.info.secure_url;
-      const newItem = {
-        name: imageUrl,
-      };
-      setDataImg((prevDataLis) => [...prevDataLis, newItem]);
-      setImageUrl(url);
       onChange([...value, url]);
     },
     [onChange, value]

@@ -60,7 +60,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-2">
-          <div className="text-xl font-semibold uppercase ">
+          <div className="text-xl font-semibold capitalize ">
             {title} | Tuan rumah {user?.name}
           </div>
           <div className="flex flex-row items-center gap-2 text-neutral-500">

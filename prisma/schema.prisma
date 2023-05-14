@@ -69,7 +69,7 @@ model Listing {
   category        String
   adult           Int?
   kids            Int?
-  children        Int?
+  baby            Int?
   roomCount       Int
   bathroomCount   Int
   guestCount      Int

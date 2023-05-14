@@ -126,7 +126,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Swiper>
           </div>
 
-          <div className="font-semibold text-foreground">{data.title}</div>
+          <div className="font-semibold text-foreground capitalize">
+            {data.title}
+          </div>
           <div className="flex gap-2 font-light text-neutral-500 items-center">
             <GrLocation color="grey" />
             {data.locationValue}

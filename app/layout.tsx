@@ -43,7 +43,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <Navbar currentUser={currentUser} />
         <ToasterProvider />
-        <SearchModal />
+        <SearchModal districts={districts} />
         <LoginModal />
         <RegisterModal />
         <RentModal districts={districts} />

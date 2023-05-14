@@ -1,26 +1,31 @@
 "use client";
-import useCountries from "@/hooks/useCountries";
 import useSearchModal from "@/hooks/useSearchModal";
 import { differenceInDays } from "date-fns";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BiSearch } from "react-icons/bi";
+import { getRegencyByName } from "territory-indonesia";
 
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
-  const { getByValue } = useCountries();
-  const locationValue = params?.get("locationValue");
+  if (!params) {
+    return;
+  }
   const startDate = params?.get("startDate");
   const endDate = params?.get("endDate");
   const guestCount = params?.get("guestCount");
 
-  const locationLabel = useMemo(() => {
-    if (locationValue) {
-      return getByValue(locationValue as string)?.label;
-    }
-    return "Anywhere";
-  }, [getByValue, locationValue]);
+  const locationValue = params?.get("locationValue");
+  const [coordinate, setCoordinate] = useState<any>("Anywhere");
+
+  useEffect(() => {
+    const fetch = async () => {
+      const cities = await getRegencyByName(locationValue);
+      setCoordinate(cities.name);
+    };
+    fetch();
+  }, [locationValue]);
 
   const durationLabel = useMemo(() => {
     if (startDate && endDate) {
@@ -33,14 +38,14 @@ const Search = () => {
       }
       return `${dif} days`;
     }
-    return "any week";
+    return "Minggu manapun";
   }, [startDate, endDate]);
 
   const gusetLabel = useMemo(() => {
     if (guestCount) {
       return `${guestCount} Guest`;
     }
-    return "add Guest";
+    return "Tambahkan tamu";
   }, [guestCount]);
 
   return (
@@ -49,7 +54,9 @@ const Search = () => {
       className="border-[1px] w-full md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer"
     >
       <div className="flex flex-row items-center justify-between">
-        <div className="text-sm font-semibold px-6">{locationLabel}</div>
+        <div className="text-sm font-semibold px-6">
+          {coordinate || "Kemana saja"}
+        </div>
         <div className="hidden sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
           {durationLabel}
         </div>

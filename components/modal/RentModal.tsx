@@ -52,7 +52,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       category: "",
       adult: 1,
       kids: 0,
-      children: 0,
+      baby: 0,
       img: [],
       price: 1,
       fasilitas: [],
@@ -119,7 +119,7 @@ const RentModal = ({ districts }: RentModalProps) => {
 
   const category = watch("category");
   const adult = watch("adult");
-  const children = watch("children");
+  const baby = watch("baby");
   const kids = watch("kids");
   const img = watch("img");
   const fasilitas = watch("fasilitas");
@@ -198,8 +198,8 @@ const RentModal = ({ districts }: RentModalProps) => {
         <Counter
           title="Balita"
           subtitle="Umur 2 tahun ke bawah"
-          value={children}
-          onChange={(value) => setCustomValue("children", value)}
+          value={baby}
+          onChange={(value) => setCustomValue("baby", value)}
         />
         <Counter
           title="kamar"

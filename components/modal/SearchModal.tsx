@@ -11,25 +11,30 @@ import useSearchModal from "@/hooks/useSearchModal";
 
 import Modal from "./Modal";
 import Counter from "../inputs/Counter";
-import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
 import Heading from "../shared/Heading";
 import Calendar from "../inputs/Calendar";
+import CountrySelect, { safeDist } from "../inputs/CountrySelect";
 
 enum STEPS {
   LOCATION = 0,
   DATE = 1,
   INFO = 2,
 }
+interface SearchModalProps {
+  districts: any;
+}
 
-const SearchModal = () => {
+const SearchModal = ({ districts }: SearchModalProps) => {
   const router = useRouter();
   const searchModal = useSearchModal();
   const params = useSearchParams();
 
   const [step, setStep] = useState(STEPS.LOCATION);
 
-  const [location, setLocation] = useState<CountrySelectValue>();
-  const [guestCount, setGuestCount] = useState(1);
+  const [location, setLocation] = useState<safeDist>();
+  const [kids, setKids] = useState(0);
+  const [adult, setAdult] = useState(0);
+  const [baby, setBaby] = useState(0);
   const [roomCount, setRoomCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
   const [dateRange, setDateRange] = useState<Range>({
@@ -68,7 +73,7 @@ const SearchModal = () => {
     const updatedQuery: any = {
       ...currentQuery,
       locationValue: location?.value,
-      guestCount,
+      guestCount: adult + kids + baby,
       roomCount,
       bathroomCount,
     };
@@ -97,7 +102,9 @@ const SearchModal = () => {
     searchModal,
     location,
     router,
-    guestCount,
+    adult,
+    kids,
+    baby,
     roomCount,
     dateRange,
     onNext,
@@ -128,11 +135,12 @@ const SearchModal = () => {
         subtitle="Find the perfect location!"
       />
       <CountrySelect
+        districts={districts}
         value={location}
-        onChange={(value) => setLocation(value as CountrySelectValue)}
+        onChange={(value) => setLocation(value as safeDist)}
       />
       <hr />
-      <Map center={location?.latling} />
+      <Map center={location?.latlng} />
     </div>
   );
 
@@ -159,10 +167,22 @@ const SearchModal = () => {
           subtitle="Find your perfect place!"
         />
         <Counter
-          onChange={(value) => setGuestCount(value)}
-          value={guestCount}
-          title="Guests"
-          subtitle="How many guests are coming?"
+          onChange={(value) => setAdult(value)}
+          value={adult}
+          title="Orang dewasa"
+          subtitle="Umur 12 tahun keatas"
+        />
+        <Counter
+          onChange={(value) => setKids(value)}
+          value={kids}
+          title="Anak-anak"
+          subtitle="Umur 2-12 tahun"
+        />
+        <Counter
+          onChange={(value) => setBaby(value)}
+          value={baby}
+          title="Balita"
+          subtitle="Dibawah 2 tahun"
         />
         <hr />
         <Counter
