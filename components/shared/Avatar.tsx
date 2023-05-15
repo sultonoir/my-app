@@ -5,8 +5,8 @@ import { useState } from "react";
 interface AvatarProps {
   src?: string | null | undefined;
   alt?: string | null | undefined;
-  width?: number | null | undefined;
-  height?: number | null | undefined;
+  width?: number;
+  height?: number;
 }
 
 const AvatarCom = ({ src, alt, width, height }: AvatarProps) => {
@@ -22,6 +22,8 @@ const AvatarCom = ({ src, alt, width, height }: AvatarProps) => {
       sizes="100%"
       style={{ objectFit: "cover" }}
       className={`
+              ${width ? "w-[200px]" : ""}
+              ${height ? "h-[200px]" : ""}
               duration-700 ease-in-out group-hover:scale-110 rounded-full p-[2px]
               ${
                 isLoading

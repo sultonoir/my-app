@@ -1,26 +1,28 @@
 "use client";
 
+import ChangPassModal from "@/components/modal/ChangPassModal";
+import ChangeProfileModal from "@/components/modal/ChangeProfileModal";
 import AvatarCom from "@/components/shared/Avatar";
 import Container from "@/components/shared/Container";
-import useProfile from "@/hooks/UseProfile";
+import EditProfile from "@/components/shared/EditProfile";
 import { SafeUser } from "@/types";
-import { IconType } from "react-icons";
 
 interface UserClientProps {
   user: SafeUser | null;
 }
 
 const UserClient: React.FC<UserClientProps> = ({ user }) => {
-  const profileModal = useProfile();
   return (
     <Container>
       <div className="flex justify-between">
         <span className="text-2xl font-semibold text-neutral-900">Profile</span>
-        <span className="w-8">
-          <button onClick={profileModal.onOpen}>Edit</button>
+        <span>
+          <EditProfile />
+          <ChangeProfileModal />
+          <ChangPassModal />
         </span>
       </div>
-      <div className="flex flex-row gap-5 justify-center">
+      <div className="flex flex-col md:flex-row gap-5 justify-center">
         <div className="border-[5px] border-rose-500 rounded-full relative">
           <AvatarCom
             src={user?.image}
@@ -29,12 +31,13 @@ const UserClient: React.FC<UserClientProps> = ({ user }) => {
             height={200}
           />
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 md:w-[500px]">
           <h1 className="text-xl font-semibold text-neutral-900">
             {user?.name}
           </h1>
-          <p className="text-neutral-500 font-light text-justify indent-5">
-            {user?.description}
+          <p className="text-neutral-500 font-light text-justify indent-5 max-w-sm">
+            {user?.description ||
+              "Orang ini sangat malas dan tidak menulis biografi apapun."}
           </p>
         </div>
       </div>
