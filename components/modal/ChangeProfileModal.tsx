@@ -1,9 +1,4 @@
-"use client";
-
-import { useState } from "react";
-import Input from "../inputs/Input";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import TextArea from "../inputs/TextArea";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import useProfile from "@/hooks/UseProfile";
@@ -13,67 +8,80 @@ import ProfileUpload from "../inputs/ProfileUpload";
 const ChangeProfileModal = () => {
   const profileModal = useProfile();
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      name: "",
-      image: "",
-      description: "",
-    },
-  });
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
-  const image = watch("image");
+  const handleSubmit = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post("/api/user", {
+        name,
+        image,
+        description,
+      });
+      toast.success("Profil berhasil diedit");
+      profileModal.onClose();
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [name, image, description]);
 
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+  const handleNameChange = (event: any) => {
+    setName(event.target.value);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true);
-    axios
-      .post("/api/user", data)
-      .then((res) => {
-        toast.success("Profile berhasil diedit");
-        profileModal.onClose();
-      })
-      .catch((err) => {
-        toast.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        profileModal.onClose();
-      });
+  const handleDescriptionChange = (event: any) => {
+    setDescription(event.target.value);
+  };
+
+  const handleImageChange = (value: any) => {
+    setImage(value);
   };
 
   const body = (
     <div className="flex flex-col gap-5">
       <ProfileUpload
         value={image}
-        onChange={(value) => setCustomValue("image", value)}
+        onChange={handleImageChange}
       />
-      <Input
+      <input
         id="name"
-        label="name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
+        type="text"
+        placeholder="Nama anda"
+        value={name}
+        onChange={handleNameChange}
+        className="peer
+          w-full
+          p-4
+          font-light 
+          bg-white 
+          border-2
+          rounded-md
+          outline-none
+          transition
+          disabled:opacity-70
+          disabled:cursor-not-allowed"
       />
-      <TextArea
+      <textarea
         id="description"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        label="description"
+        maxLength={500}
+        placeholder="Deskripsi profil"
+        value={description}
+        onChange={handleDescriptionChange}
+        className="peer
+          w-full
+          p-4
+          font-light 
+          bg-white 
+          border-2
+          rounded-md
+          outline-none
+          transition
+          disabled:opacity-70
+          disabled:cursor-not-allowed"
       />
     </div>
   );
@@ -81,11 +89,12 @@ const ChangeProfileModal = () => {
   return (
     <Modal
       isOpen={profileModal.isOpen}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit}
       onClose={profileModal.onClose}
       actionLabel="Submit"
       body={body}
-      title="Edit profile"
+      title="Edit profil"
+      disabled={isLoading}
     />
   );
 };

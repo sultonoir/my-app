@@ -25,6 +25,7 @@ const AvatarCom = ({ src, alt, width, height }: AvatarProps) => {
               ${width ? "w-[200px]" : ""}
               ${height ? "h-[200px]" : ""}
               duration-700 ease-in-out group-hover:scale-110 rounded-full p-[2px]
+              aspect-square
               ${
                 isLoading
                   ? "scale-110 blur-2xl grayscale"

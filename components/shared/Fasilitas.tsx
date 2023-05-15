@@ -1,8 +1,16 @@
 "use client";
 
 import { IconType } from "react-icons";
+import { AiFillCar } from "react-icons/ai";
 import { BsSnow, BsWifi } from "react-icons/bs";
-import { MdOutlineDesk } from "react-icons/md";
+import {
+  GiBigWave,
+  GiBurningForest,
+  GiFlowers,
+  GiModernCity,
+} from "react-icons/gi";
+import { MdLocalLaundryService, MdOutlineDesk } from "react-icons/md";
+import { CiForkAndKnife } from "react-icons/ci";
 
 export const facility = [
   {
@@ -16,6 +24,34 @@ export const facility = [
   {
     label: "Area kerja khusus",
     icon: MdOutlineDesk,
+  },
+  {
+    label: "Pemandangan taman",
+    icon: GiFlowers,
+  },
+  {
+    label: "Pemandangan laut lepas ",
+    icon: GiBigWave,
+  },
+  {
+    label: "Pemandangan alam terbuka",
+    icon: GiBurningForest,
+  },
+  {
+    label: "Pemandangan pusat kota",
+    icon: GiModernCity,
+  },
+  {
+    label: "Parkir gratis",
+    icon: AiFillCar,
+  },
+  {
+    label: "Termasuk alat makan",
+    icon: CiForkAndKnife,
+  },
+  {
+    label: "Mesincuci gratis",
+    icon: MdLocalLaundryService,
   },
 ];
 
