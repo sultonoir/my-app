@@ -10,10 +10,9 @@ import PropertiesClient from "./PropertiesClient";
 
 interface UserClientProps {
   user: SafeUser | null;
-  listings: SafeListing[];
 }
 
-const UserClient: React.FC<UserClientProps> = ({ user, listings }) => {
+const UserClient: React.FC<UserClientProps> = ({ user }) => {
   return (
     <Container>
       <div className="flex justify-between">
@@ -43,11 +42,6 @@ const UserClient: React.FC<UserClientProps> = ({ user, listings }) => {
           </p>
         </div>
       </div>
-
-      <PropertiesClient
-        currentUser={user}
-        listings={listings}
-      />
     </Container>
   );
 };

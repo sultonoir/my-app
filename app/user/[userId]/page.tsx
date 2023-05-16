@@ -2,6 +2,7 @@ import getCurrentUser from "@/components/actions/getCurrentUser";
 import UserClient from "./UserClient";
 import EmptyState from "@/components/shared/EmptyState";
 import getListings from "@/components/actions/getListings";
+import PropertiesClient from "./PropertiesClient";
 
 interface Iparams {
   userId: string;
@@ -25,10 +26,13 @@ const page = async ({ params }: { params: Iparams }) => {
   }
 
   return (
-    <UserClient
-      user={currentUser}
-      listings={listings}
-    />
+    <div className="flex flex-col gap-y-8">
+      <UserClient user={currentUser} />;
+      <PropertiesClient
+        currentUser={currentUser}
+        listings={listings}
+      />
+    </div>
   );
 };
 

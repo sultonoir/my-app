@@ -16,6 +16,9 @@ export default async function getFavoriteListings() {
           in: [...(currentUser.favoriteIds || [])],
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     const safeFavorites = favorites.map((favorite) => ({
