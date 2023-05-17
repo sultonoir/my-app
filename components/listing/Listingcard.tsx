@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { format } from "date-fns";
 import Button from "../shared/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,6 +12,9 @@ import BluredImage from "../shared/BluredImage";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import HearthButton from "../shared/HeartButton";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -22,6 +25,9 @@ interface ListingCardProps {
   actionId?: string;
   currentUser?: SafeUser | null;
   name?: string | null | undefined;
+  properties?: boolean;
+  countdown?: boolean;
+  payment?: boolean;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -33,11 +39,37 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionId = "",
   currentUser,
   name,
+  properties,
+  countdown,
+  payment,
 }) => {
   const newData = {
     ...data,
     imageSrc: data.imageSrc.map((src) => ({ name: src })),
   };
+
+  const onPayment = useCallback(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    axios
+      .post("/api/payment", {
+        totalPrice: reservation?.totalPrice,
+        title: reservation?.listing.title,
+        image: [
+          reservation?.listing.imageSrc[0],
+          reservation?.listing.imageSrc[1],
+        ],
+      })
+      .then((response) => {
+        const data = response.data.url;
+        window.location.href = data;
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      });
+  }, [reservation?.totalPrice, reservation?.listing.title]);
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,6 +109,41 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [reservation]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const onBreak = async () => {
+    try {
+      setIsLoading(true);
+
+      if (data.status === "break") {
+        await axios.post("/api/properties", {
+          status: "aktif",
+          listingId: data.id,
+        });
+        toast.success("Layanan diaktifkan");
+        router.refresh();
+      } else {
+        await axios.post("/api/properties", {
+          status: "break",
+          listingId: data.id,
+        });
+        toast.success("Layanan dihentikan sementara");
+        router.refresh();
+      }
+    } catch (error) {
+      toast.error("Gagal menghentikan layanan");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const Label = useMemo(() => {
+    if (data.status === "break") {
+      return "Aktifkan layananan";
+    }
+    return "Hentikan layanan";
+  }, [data.status]);
 
   return (
     <div className="relative">
@@ -141,16 +208,42 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <div className="font-semibold">{price}</div>
             {!reservation && <div className="font-light">night</div>}
           </div>
-          {onAction && actionLabel && (
-            <Button
-              disabled={disabled}
-              small
-              label={actionLabel}
-              onClick={handleCancel}
-            />
-          )}
         </div>
       </Link>
+      <div className="flex flex-col gap-y-3">
+        {/* {countdownStarted && (
+          <div className="flex flex-row gap-x-2">
+            <span className="flex flex-row gap-x-2">{hour}Jam</span>
+            <span>:</span>
+            <span className="flex flex-row gap-x-2">{minute}Menit</span>
+          </div>
+        )} */}
+        {onAction && actionLabel && (
+          <Button
+            disabled={disabled}
+            small
+            label={actionLabel}
+            onClick={handleCancel}
+          />
+        )}
+        {properties && (
+          <Button
+            small
+            onClick={onBreak}
+            label={Label}
+            disabled={isLoading}
+          />
+        )}
+        {payment && (
+          <div className="mt-2">
+            <Button
+              onClick={onPayment}
+              small
+              label="bayar"
+            />
+          </div>
+        )}
+      </div>
       <div
         className="
             absolute

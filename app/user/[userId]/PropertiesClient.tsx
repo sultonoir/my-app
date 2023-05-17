@@ -37,6 +37,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
     },
     [router]
   );
+
   return (
     <Container>
       <Heading
@@ -53,6 +54,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
             disabled={deletingId === listing.id}
             actionLabel="Delete Property"
             currentUser={currentUser}
+            properties
           />
         ))}
       </div>
