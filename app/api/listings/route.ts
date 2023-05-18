@@ -24,12 +24,14 @@ export async function POST(request: Request) {
     adult,
     baby,
     fasilitas,
+    NearestTour,
   } = body;
   const { value } = location;
 
   const listing = await prisma.listing.create({
     data: {
       title,
+      NearestTour,
       kids,
       adult,
       baby,

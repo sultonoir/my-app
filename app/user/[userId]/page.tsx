@@ -3,7 +3,6 @@ import UserClient from "./UserClient";
 import EmptyState from "@/components/shared/EmptyState";
 import getListings from "@/components/actions/getListings";
 import PropertiesClient from "./PropertiesClient";
-import getProperties from "@/components/actions/getProperties";
 
 interface Iparams {
   userId: string;
@@ -15,7 +14,17 @@ const page = async ({ params }: { params: Iparams }) => {
   if (!currentUser) {
     return <EmptyState />;
   }
-  const listings = await getProperties({ userId: currentUser.id });
+  const listings = await getListings({ userId: currentUser.id });
+
+  if (listings.length === 0) {
+    return (
+      <EmptyState
+        title="Anda tidak memiliki property"
+        subtitle="buat Terlebih dahulu property anda"
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col gap-y-8">
       <UserClient user={currentUser} />;

@@ -19,15 +19,17 @@ import Input from "../inputs/Input";
 import InputIdr from "../inputs/InputIdr";
 import TextArea from "../inputs/TextArea";
 import Fasilitas, { facility } from "../shared/Fasilitas";
+import NearTour from "../shared/NearTour";
 
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
   INFO = 2,
-  IMAGES = 3,
-  FASILITAS = 4,
-  DESCRIPTION = 5,
-  PRICE = 6,
+  NEARESTTOUR = 3,
+  IMAGES = 4,
+  FASILITAS = 5,
+  DESCRIPTION = 6,
+  PRICE = 7,
 }
 
 interface RentModalProps {
@@ -62,6 +64,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       roomCount: 1,
       bathroomCount: 1,
       guestCount: 0,
+      NearestTour: [],
     },
   });
 
@@ -126,6 +129,7 @@ const RentModal = ({ districts }: RentModalProps) => {
   const location = watch("location");
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
+  const NearestTour = watch("NearestTour");
 
   const Map = useMemo(
     () =>
@@ -212,6 +216,21 @@ const RentModal = ({ districts }: RentModalProps) => {
           subtitle="Berapa banyak kamar mandi yang anda miliki"
           value={bathroomCount}
           onChange={(value) => setCustomValue("bathroomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.NEARESTTOUR) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Tambahkan tempat wisata"
+          subtitle="wisata terdekat dengan penginapan"
+        />
+        <NearTour
+          value={NearestTour}
+          onChange={(value) => setCustomValue("NearestTour", value)}
         />
       </div>
     );

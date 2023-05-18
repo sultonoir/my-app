@@ -5,8 +5,8 @@ import ChangeProfileModal from "@/components/modal/ChangeProfileModal";
 import AvatarCom from "@/components/shared/Avatar";
 import Container from "@/components/shared/Container";
 import EditProfile from "@/components/shared/EditProfile";
+import useData from "@/hooks/useData";
 import { SafeListing, SafeUser } from "@/types";
-import PropertiesClient from "./PropertiesClient";
 
 interface UserClientProps {
   user: SafeUser | null;

@@ -2,7 +2,7 @@
 
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { TbPhotoPlus } from "react-icons/tb";
 
 declare global {
@@ -21,6 +21,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
     (result: any) => {
       const url = result.info.secure_url;
       onChange([...value, url]);
+    },
+    [onChange, value]
+  );
+
+  const removeImage = useCallback(
+    (url: string) => {
+      const updatedValue = value.filter((imageUrl) => imageUrl !== url);
+      onChange(updatedValue);
     },
     [onChange, value]
   );
@@ -56,18 +64,39 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
             "
             >
               <TbPhotoPlus size={50} />
-              <div className="font-semibold text-lg">Click to upload</div>
+              <div className="font-semibold text-lg">Klik untuk mengunggah</div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
               {value.map((url) => (
-                <Image
-                  width={200}
-                  height={300}
-                  src={url}
-                  alt="House"
+                <div
                   key={url}
-                  className="w-full"
-                />
+                  className="relative"
+                >
+                  <Image
+                    width={200}
+                    height={300}
+                    src={url}
+                    alt="House"
+                    className="w-full"
+                  />
+                  <button
+                    onClick={() => removeImage(url)}
+                    className="
+                      absolute
+                      top-2
+                      right-2
+                      rounded-full
+                      bg-red-500
+                      text-white
+                      p-2
+                      focus:outline-none
+                      hover:bg-red-600
+                      transition
+                    "
+                  >
+                    X
+                  </button>
+                </div>
               ))}
             </div>
           </div>

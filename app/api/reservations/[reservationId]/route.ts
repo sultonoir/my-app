@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import getCurrentUser from "@/components/actions/getCurrentUser";
 import prisma from "@/libs/prisma";
@@ -32,3 +32,26 @@ export async function DELETE(
 
   return NextResponse.json(reservation);
 }
+
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: IParams }
+) => {
+  const { reservationId } = params;
+
+  if (!reservationId || typeof reservationId !== "string") {
+    throw new Error("Invalid ID");
+  }
+
+  try {
+    const reservation = await prisma.reservation.findMany({
+      where: {
+        id: reservationId,
+      },
+    });
+
+    return NextResponse.json(reservation);
+  } catch (error) {
+    console.log(error);
+  }
+};

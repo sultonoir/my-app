@@ -64,7 +64,8 @@ model Listing {
   title           String
   description     String
   imageSrc        String[] 
-  fasilitas       String[] 
+  fasilitas       String[]
+  NearestTour     String[]
   createdAt       DateTime @default(now())
   category        String
   adult           Int?

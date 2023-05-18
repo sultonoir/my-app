@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import useProfile from "@/hooks/UseProfile";
 import Modal from "./Modal";
 import ProfileUpload from "../inputs/ProfileUpload";
+import { useRouter } from "next/navigation";
 
 const ChangeProfileModal = () => {
   const profileModal = useProfile();
@@ -11,7 +12,7 @@ const ChangeProfileModal = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-
+  const router = useRouter();
   const handleSubmit = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -21,6 +22,7 @@ const ChangeProfileModal = () => {
         description,
       });
       toast.success("Profil berhasil diedit");
+      router.refresh();
       profileModal.onClose();
     } catch (error: any) {
       toast.error(error.message);
