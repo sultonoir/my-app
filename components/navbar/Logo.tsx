@@ -1,11 +1,23 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Logo = () => {
-  const router = useRouter();
-  return <Image onClick={() => router.push("/")} src={`/logo.svg`} height={40} width={40} className="hidden md:block cursor-pointer rounded-full" alt="logo" />;
+  return (
+    <Link href={"/"}>
+      <span className="w-[40px] block">
+        <Image
+          src={`/logo.svg`}
+          height={40}
+          priority
+          width={40}
+          className="block cursor-pointer rounded-full"
+          alt="logo"
+        />
+      </span>
+    </Link>
+  );
 };
 
 export default Logo;

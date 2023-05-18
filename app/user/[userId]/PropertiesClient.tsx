@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import Container from "@/components/shared/Container";
 import Heading from "@/components/shared/Heading";
 import ListingCard from "@/components/listing/Listingcard";
+import EmptyState from "@/components/shared/EmptyState";
 
 interface PropertiesClientProps {
   listings: SafeListing[];
@@ -17,6 +18,14 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
   listings,
   currentUser,
 }) => {
+  if (listings.length === 0) {
+    return (
+      <EmptyState
+        title="Anda tidak memiliki property"
+        subtitle="buat Terlebih dahulu property anda"
+      />
+    );
+  }
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
   const onCancel = useCallback(

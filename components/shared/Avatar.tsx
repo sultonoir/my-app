@@ -22,8 +22,6 @@ const AvatarCom = ({ src, alt, width, height }: AvatarProps) => {
       sizes="100%"
       style={{ objectFit: "cover" }}
       className={`
-              ${width ? "w-[200px]" : ""}
-              ${height ? "h-[200px]" : ""}
               duration-700 ease-in-out group-hover:scale-110 rounded-full p-[2px]
               aspect-square
               ${

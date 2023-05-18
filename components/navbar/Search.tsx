@@ -10,7 +10,7 @@ const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
   if (!params) {
-    return;
+    return null;
   }
   const startDate = params?.get("startDate");
   const endDate = params?.get("endDate");
@@ -57,11 +57,11 @@ const Search = () => {
         <div className="text-sm font-semibold px-6">
           {coordinate || "Kemana saja"}
         </div>
-        <div className="hidden sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
+        <div className="hidden lg:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
           {durationLabel}
         </div>
         <div className="text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3">
-          <div className="hidden sm:block">{gusetLabel}</div>
+          <div className="hidden lg:block">{gusetLabel}</div>
           <div className="p-2 bg-rose-500 rounded-full text-white">
             <BiSearch size={18} />
           </div>
