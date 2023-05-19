@@ -63,8 +63,30 @@ const ListingClient: React.FC<ListingClientProps> = ({
   }, [listing.category]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+  const [dayCount, setDayCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cost, setCost] = useState(0);
+
+  useEffect(() => {
+    if (dateRange.startDate && dateRange.endDate) {
+      const newDayCount = differenceInDays(
+        dateRange.endDate,
+        dateRange.startDate
+      );
+      setDayCount(newDayCount);
+    }
+  }, [dateRange]);
+
+  useEffect(() => {
+    if (dayCount && listing.price) {
+      setTotalPrice(dayCount * listing.price);
+      setCost(totalPrice * 0.02);
+    } else {
+      setTotalPrice(listing.price);
+      setCost(totalPrice * 0.02);
+    }
+  }, [dayCount, listing.price, totalPrice]);
 
   const onCreateReservation = useCallback(() => {
     if (!currentUser) {
@@ -74,16 +96,18 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
     axios
       .post("/api/reservations", {
-        totalPrice,
+        userId: currentUser.id,
+        totalPrice: totalPrice + cost,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
         listingId: listing?.id,
         status: "pending",
+        adminCost: cost,
       })
       .then(() => {
         toast.success("Listing reserved!");
         setDateRange(initialDateRange);
-        router.push("/trips");
+        router.push("/payment");
       })
       .catch(() => {
         toast.error("Something went wrong.");
@@ -91,19 +115,15 @@ const ListingClient: React.FC<ListingClientProps> = ({
       .finally(() => {
         setIsLoading(false);
       });
-  }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);
-
-  useEffect(() => {
-    if (dateRange.startDate && dateRange.endDate) {
-      const dayCount = differenceInDays(dateRange.endDate, dateRange.startDate);
-
-      if (dayCount && listing.price) {
-        setTotalPrice(dayCount * listing.price);
-      } else {
-        setTotalPrice(listing.price);
-      }
-    }
-  }, [dateRange, listing.price]);
+  }, [
+    totalPrice,
+    cost,
+    dateRange,
+    listing?.id,
+    router,
+    currentUser,
+    loginModal,
+  ]);
 
   return (
     <Container>
@@ -158,6 +178,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 onSubmit={onCreateReservation}
                 disabled={isLoading}
                 disabledDate={disabledDates}
+                cost={cost}
+                dayCount={dayCount}
               />
             </div>
           </div>

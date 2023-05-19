@@ -48,29 +48,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
     imageSrc: data.imageSrc.map((src) => ({ name: src })),
   };
 
-  const onPayment = useCallback(() => {
-    if (!currentUser) {
-      return;
-    }
-
-    axios
-      .post("/api/payment", {
-        totalPrice: reservation?.totalPrice,
-        title: reservation?.listing.title,
-        image: [
-          reservation?.listing.imageSrc[0],
-          reservation?.listing.imageSrc[1],
-        ],
-      })
-      .then((response) => {
-        const data = response.data.url;
-        window.location.href = data;
-      })
-      .catch(() => {
-        toast.error("Something went wrong.");
-      });
-  }, [reservation?.totalPrice, reservation?.listing.title]);
-
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
@@ -136,6 +113,31 @@ const ListingCard: React.FC<ListingCardProps> = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onPayment = () => {
+    if (!currentUser) {
+      return;
+    }
+    axios
+      .post("/api/payment", {
+        totalPrice: reservation?.totalPrice,
+        title: reservation?.listing.title,
+        image: [
+          reservation?.listing.imageSrc[0],
+          reservation?.listing.imageSrc[1],
+        ],
+        adminCos: reservation?.adminCost,
+        reservationId: reservation?.id,
+        userId: currentUser.id,
+      })
+      .then((response) => {
+        const data = response.data.url;
+        window.location.href = data;
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      });
   };
 
   const Label = useMemo(() => {
@@ -210,7 +212,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </div>
         </div>
       </Link>
-      <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col gap-y-2">
         {/* {countdownStarted && (
           <div className="flex flex-row gap-x-2">
             <span className="flex flex-row gap-x-2">{hour}Jam</span>

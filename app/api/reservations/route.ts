@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/libs/prisma";
-import getCurrentUser from "@/components/actions/getCurrentUser";
-import { parse } from "url";
 
 interface IParams {
   listingId?: string;
@@ -11,16 +9,26 @@ interface IParams {
 }
 
 export async function POST(request: Request) {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return NextResponse.error();
-  }
-
   const body = await request.json();
-  const { listingId, startDate, endDate, totalPrice, status } = body;
+  const {
+    listingId,
+    startDate,
+    endDate,
+    totalPrice,
+    status,
+    userId,
+    adminCost,
+  } = body;
 
-  if (!listingId || !startDate || !endDate || !totalPrice || !status) {
+  if (
+    !listingId ||
+    !startDate ||
+    !endDate ||
+    !totalPrice ||
+    !status ||
+    !userId ||
+    !adminCost
+  ) {
     return NextResponse.error();
   }
 
@@ -31,57 +39,15 @@ export async function POST(request: Request) {
     data: {
       reservations: {
         create: {
-          userId: currentUser.id,
+          userId,
           startDate,
           endDate,
           totalPrice,
           status,
+          adminCost,
         },
       },
     },
   });
   return NextResponse.json(listingAndReservation);
 }
-
-export const GET = async (req: NextRequest) => {
-  try {
-    const { query } = parse(req.url || "", true);
-    const { listingId, userId, authorId } = query as IParams;
-    const prismaQuery: any = {};
-
-    if (listingId) {
-      prismaQuery.listingId = listingId;
-    }
-
-    if (userId) {
-      prismaQuery.userId = userId;
-    }
-
-    if (authorId) {
-      prismaQuery.listing = { userId: authorId };
-    }
-
-    const reservations = await prisma.reservation.findMany({
-      where: prismaQuery,
-      include: {
-        listing: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    const safeReservations = reservations.map((reservation) => ({
-      ...reservation,
-      createdAt: reservation.createdAt.toISOString(),
-      startDate: reservation.startDate.toISOString(),
-      endDate: reservation.endDate.toISOString(),
-      listing: {
-        ...reservation.listing,
-        createdAt: reservation.listing.createdAt.toISOString(),
-      },
-    }));
-
-    return NextResponse.json(safeReservations);
-  } catch (error) {}
-};

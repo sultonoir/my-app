@@ -6,13 +6,14 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SlLogout } from "react-icons/sl";
-import { BsBookmarkHeart, BsClockHistory } from "react-icons/bs";
+import { BsBookmarkHeart } from "react-icons/bs";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
 import { BiUser } from "react-icons/bi";
+import { MdOutlinePayments } from "react-icons/md";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
@@ -64,16 +65,16 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => router.push("/trips")}
+                      onClick={() => router.push("/payment")}
                       className={`${
                         active ? "bg-rose-500 text-white" : "text-primary"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
-                      <BsClockHistory
+                      <MdOutlinePayments
                         size={24}
                         className="pr-2"
                       />
-                      Trips
+                      Paymet
                     </button>
                   )}
                 </Menu.Item>
@@ -89,7 +90,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                         size={24}
                         className="pr-2"
                       />
-                      User
+                      Account
                     </button>
                   )}
                 </Menu.Item>
