@@ -10,8 +10,6 @@ interface ListingReservationProps {
   onSubmit: () => void;
   disabled: boolean;
   disabledDate: Date[];
-  cost: number;
-  dayCount: number;
 }
 const ListingReservation: React.FC<ListingReservationProps> = ({
   price,
@@ -21,23 +19,12 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
   disabled,
   disabledDate,
   onChangeDate,
-  cost,
-  dayCount,
 }) => {
-  const formatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  });
-
-  const priceRupiah = formatter.format(price);
-  const totalPriceRupiah = formatter.format(totalPrice);
-  const adminCost = formatter.format(cost);
-  const allCost = formatter.format(cost + totalPrice);
   return (
     <div className=" bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden">
       <div className="flex flex-row items-center gap-1 p-4">
-        <div className="text-2xl font-semibold">{priceRupiah}</div>
-        <div className="font-light text-neutral-600">/ Malam</div>
+        <div className="text-2xl font-semibold">$ {price}</div>
+        <div className="font-light text-neutral-600">night</div>
       </div>
       <hr />
       <Calender
@@ -53,26 +40,9 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
           onClick={onSubmit}
         />
       </div>
-      <div className="flex flex-col gap-y-2 p-4">
-        <div className="flex flex-row items-center justify-between font-semibold  text-neutral-500">
-          <div>Biaya admin</div>
-          <div>{adminCost}</div>
-        </div>
-        <div className="flex flex-row items-center justify-between font-semibold  text-neutral-500">
-          <span>
-            {dayCount === 0 ? (
-              "1 Malam"
-            ) : (
-              <span className="flex flex-row gap-2">{dayCount} Malam</span>
-            )}
-          </span>
-          <span>{totalPriceRupiah}</span>
-        </div>
-        <hr />
-        <div className="flex flex-row items-center justify-between font-semibold text-lg">
-          <div>Total biaya</div>
-          <div>{allCost}</div>
-        </div>
+      <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
+        <div>Total</div>
+        <div>$ {totalPrice}</div>
       </div>
     </div>
   );

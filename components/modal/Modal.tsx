@@ -109,7 +109,7 @@ export default function Modal({
                   <hr />
                   <div
                     onClick={handleClose}
-                    className="absolute top-3 right-3 p-2 hover:bg-[#f1f5f9] rounded-full"
+                    className="absolute top-3 right-3 p-2 hover:bg-[#f1f5f9] rounded-full cursor-pointer"
                   >
                     <VscClose size={20} />
                   </div>

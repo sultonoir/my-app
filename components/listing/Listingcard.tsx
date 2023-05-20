@@ -68,7 +68,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
     });
 
     if (reservation) {
-      const formattedPrice = formatter.format(reservation.totalPrice);
+      const formattedPrice = formatter.format(
+        reservation.totalPrice + reservation.adminCost
+      );
       return formattedPrice;
     }
 
@@ -115,21 +117,18 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
   };
 
-  const onPayment = () => {
-    if (!currentUser) {
-      return;
-    }
+  const onCreateReservation = useCallback(() => {
     axios
-      .post("/api/payment", {
+      .post("api/payment", {
         totalPrice: reservation?.totalPrice,
         title: reservation?.listing.title,
         image: [
           reservation?.listing.imageSrc[0],
           reservation?.listing.imageSrc[1],
         ],
-        adminCos: reservation?.adminCost,
+        adminCost: reservation?.adminCost,
         reservationId: reservation?.id,
-        userId: currentUser.id,
+        userId: currentUser?.id,
       })
       .then((response) => {
         const data = response.data.url;
@@ -138,7 +137,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       .catch(() => {
         toast.error("Something went wrong.");
       });
-  };
+  }, [reservation?.totalPrice, reservation?.listing.title]);
 
   const Label = useMemo(() => {
     if (data.status === "break") {
@@ -239,7 +238,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         {payment && (
           <div className="mt-2">
             <Button
-              onClick={onPayment}
+              onClick={onCreateReservation}
               small
               label="bayar"
             />

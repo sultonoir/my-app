@@ -20,16 +20,20 @@ import InputIdr from "../inputs/InputIdr";
 import TextArea from "../inputs/TextArea";
 import Fasilitas, { facility } from "../shared/Fasilitas";
 import NearTour from "../shared/NearTour";
+import Image from "next/image";
+import BluredImage from "../shared/BluredImage";
+import AvatarCom from "../shared/Avatar";
 
 enum STEPS {
-  CATEGORY = 0,
-  LOCATION = 1,
-  INFO = 2,
-  NEARESTTOUR = 3,
-  IMAGES = 4,
-  FASILITAS = 5,
-  DESCRIPTION = 6,
-  PRICE = 7,
+  TERM = 0,
+  CATEGORY = 1,
+  LOCATION = 2,
+  INFO = 3,
+  NEARESTTOUR = 4,
+  IMAGES = 5,
+  FASILITAS = 6,
+  DESCRIPTION = 7,
+  PRICE = 8,
 }
 
 interface RentModalProps {
@@ -39,7 +43,7 @@ interface RentModalProps {
 const RentModal = ({ districts }: RentModalProps) => {
   const router = useRouter();
   const rentModal = useRentModal();
-  const [step, setStep] = useState(STEPS.CATEGORY);
+  const [step, setStep] = useState(STEPS.TERM);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -87,7 +91,7 @@ const RentModal = ({ districts }: RentModalProps) => {
         toast.success("Listing Created");
         router.refresh();
         reset();
-        setStep(STEPS.CATEGORY);
+        setStep(STEPS.TERM);
         rentModal.onClose();
       })
       .catch((error: any) => {
@@ -114,7 +118,7 @@ const RentModal = ({ districts }: RentModalProps) => {
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
-    if (step === STEPS.CATEGORY) {
+    if (step === STEPS.TERM) {
       return undefined;
     }
     return "back";
@@ -140,34 +144,57 @@ const RentModal = ({ districts }: RentModalProps) => {
   );
 
   let bodyContent = (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 items-center justify-center">
       <Heading
-        title="Pilih kategory "
-        subtitle="category yang menggambarkan kamar anda"
+        title="Selamat datang di kyouka"
+        subtitle="Cara mudah untuk mempromosika tempat mu"
+        center
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
-        {categories.map((item) => (
-          <div
-            key={item.label}
-            className="col-span-1"
-          >
-            <CategoryInput
-              onClick={(category) => setCustomValue("category", category)}
-              selected={category === item.label}
-              label={item.label}
-              icon={item.icon}
-            />
-          </div>
-        ))}
-      </div>
+      <Image
+        src={`/ren.jpg`}
+        alt="Rental"
+        priority
+        width={400}
+        height={400}
+        quality={100}
+        sizes="100%"
+        style={{ objectFit: "cover" }}
+        className="aspect-square w-full h-full"
+      />
     </div>
   );
+
+  if (step === STEPS.CATEGORY) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Pilih kategory "
+          subtitle="category yang menggambarkan kamar anda"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
+          {categories.map((item) => (
+            <div
+              key={item.label}
+              className="col-span-1"
+            >
+              <CategoryInput
+                onClick={(category) => setCustomValue("category", category)}
+                selected={category === item.label}
+                label={item.label}
+                icon={item.icon}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Where is your place located ? "
+          title="Dikota mana tempat"
           subtitle="Help guest find you!"
         />
         <CountrySelect
@@ -331,7 +358,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       onClose={rentModal.onClose}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
-      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+      secondaryAction={step === STEPS.TERM ? undefined : onBack}
       title="Properti"
       disabled={isLoading}
     />

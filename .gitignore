@@ -1,35 +1,38 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# File dan direktori yang diabaikan oleh Git
 
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# testing
+# Coverage hasil pengujian
 /coverage
 
-# next.js
+# Direktori hasil build untuk Next.js
 /.next/
 /out/
 
-# production
+# Direktori hasil produksi
 /build
 
-# misc
+# File .DS_Store di macOS
 .DS_Store
+
+# File dengan ekstensi .pem
 *.pem
 
-# debug
+# File log debug NPM dan Yarn
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
+# File lingkungan lokal dengan ekstensi .env.local
 .env*.local
+.env
 
-# vercel
+# Direktori Vercel
 .vercel
 
-# typescript
+# File TypeScript
 *.tsbuildinfo
 next-env.d.ts

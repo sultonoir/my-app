@@ -16,7 +16,7 @@ const EditProfile = () => {
       className="relative inline-block text-left"
     >
       <div>
-        <Menu.Button className="flex gap-2 w-20 bg-rose-500 rounded-full px-2 py-1 active:scale-90 transition hover:text-slate-100">
+        <Menu.Button className="flex gap-2 w-20 bg-rose-500 rounded-full px-2 py-1 active:scale-90 transition text-slate-100">
           <AiOutlineEdit size={24} />
           Edit
         </Menu.Button>

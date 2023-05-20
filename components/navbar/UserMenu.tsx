@@ -12,7 +12,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
-import { BiUser } from "react-icons/bi";
+import { BiPlus, BiUser } from "react-icons/bi";
 import { MdOutlinePayments } from "react-icons/md";
 
 interface UserMenuProps {
@@ -40,7 +40,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           onClick={onRent}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
-          UserMenu
+          Mode tuan rumah
+        </div>
+        <div className="md:hidden p-3 border border-neutral-200 hover:shadow-md transition cursor-pointer rounded-full">
+          <BiPlus />
         </div>
         <Menu.Button className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
           <AiOutlineMenu />

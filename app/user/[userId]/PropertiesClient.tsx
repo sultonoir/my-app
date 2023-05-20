@@ -23,6 +23,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
       <EmptyState
         title="Anda tidak memiliki property"
         subtitle="buat Terlebih dahulu property anda"
+        rentmodal
       />
     );
   }

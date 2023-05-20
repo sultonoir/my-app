@@ -10,8 +10,8 @@ const favoriteListing = async () => {
   if (listings.length === 0) {
     return (
       <EmptyState
-        title="Favorite tidak ditemukan"
-        subtitle="Sepertinya Anda tidak memiliki daftar favorit"
+        title="Buat daftar favorit pertama Anda"
+        subtitle="Saat Anda mencari, ketuk ikon hati untuk menyimpan tempat dan Pengalaman yang Anda sukai ke favorit."
       />
     );
   }
