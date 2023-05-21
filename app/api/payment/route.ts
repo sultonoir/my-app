@@ -3,9 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { totalPrice, title, image, adminCost, userId, reservationId } = body;
+  const { totalPrice, title, image, userId, reservationId } = body;
+  let success = "success";
   try {
-    const successUrl = `http://localhost:3000/`;
+    const successUrl = `http://localhost:3000/success/${reservationId}`;
     const cancelUrl = `http://localhost:3000/payment`;
 
     const checkoutSession = await stripe.checkout.sessions.create({
@@ -18,16 +19,6 @@ export async function POST(request: Request) {
               images: image,
             },
             unit_amount: totalPrice * 100,
-          },
-          quantity: 1,
-        },
-        {
-          price_data: {
-            currency: "idr",
-            product_data: {
-              name: "Biaya admin",
-            },
-            unit_amount: adminCost * 100,
           },
           quantity: 1,
         },

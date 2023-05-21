@@ -68,9 +68,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     });
 
     if (reservation) {
-      const formattedPrice = formatter.format(
-        reservation.totalPrice + reservation.adminCost
-      );
+      const formattedPrice = formatter.format(reservation.totalPrice);
       return formattedPrice;
     }
 
@@ -126,7 +124,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
           reservation?.listing.imageSrc[0],
           reservation?.listing.imageSrc[1],
         ],
-        adminCost: reservation?.adminCost,
         reservationId: reservation?.id,
         userId: currentUser?.id,
       })

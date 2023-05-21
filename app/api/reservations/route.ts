@@ -2,12 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/libs/prisma";
 
-interface IParams {
-  listingId?: string;
-  userId?: string;
-  authorId?: string;
-}
-
 export async function POST(request: Request) {
   const body = await request.json();
   const {
@@ -26,8 +20,7 @@ export async function POST(request: Request) {
     !endDate ||
     !totalPrice ||
     !status ||
-    !userId ||
-    !adminCost
+    !userId
   ) {
     return NextResponse.error();
   }
@@ -44,10 +37,32 @@ export async function POST(request: Request) {
           endDate,
           totalPrice,
           status,
-          adminCost,
         },
       },
     },
   });
   return NextResponse.json(listingAndReservation);
 }
+
+export const PUT = async (request: Request) => {
+  const body = await request.json();
+  const { status, reservationId } = body;
+  if (!status || reservationId) {
+    return NextResponse.json({ message: "Tidak ada status" });
+  }
+
+  try {
+    await prisma.reservation.update({
+      where: {
+        id: reservationId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    return NextResponse.json({ message: "success" });
+  } catch (err: any) {
+    return NextResponse.error();
+  }
+};

@@ -25,8 +25,7 @@ const InputIdr: React.FC<InputIdrProps> = ({
   errors,
 }) => {
   return (
-    <label className="input-group">
-      <span className="bg-info text-secondary">RP.</span>
+    <label className="relative block">
       <input
         id={id}
         disabled={disabled}
@@ -34,25 +33,31 @@ const InputIdr: React.FC<InputIdrProps> = ({
         placeholder=" "
         type={type}
         className={`
-            input
-            input-info
-            peer
-            w-full
-            p-4
-            pt-6
-            font-light 
-            bg-background
-            rounded-md
-            outline-none
-            transition
-            disabled:bg-secondary
-            disabled:cursor-not-allowed
-            relative
-            ${formatPrice ? "pl-9" : "pl-4"}
-            ${errors[id] ? "border-rose-500" : ""}
-            ${errors[id] ? "focus:border-rose-500" : ""}
-          `}
+      input
+      input-info
+      peer
+      w-full
+      p-4
+      pt-6
+      font-light 
+      bg-background
+      rounded-md
+      outline-none
+      transition
+      border
+      border-neutral-300
+      disabled:bg-secondary
+      disabled:cursor-not-allowed
+      ${formatPrice ? "pl-9" : "pl-4"}
+      ${errors[id] ? "border-rose-500" : ""}
+      ${errors[id] ? "focus:border-rose-500" : ""}
+    `}
       />
+      {formatPrice && (
+        <span className="absolute top-[25px] left-[10px] text-secondary">
+          RP.
+        </span>
+      )}
     </label>
   );
 };

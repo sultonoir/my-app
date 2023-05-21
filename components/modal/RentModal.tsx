@@ -268,7 +268,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       <div className="flex flex-col gap-8">
         <Heading
           title="Tambahkan foto"
-          subtitle="Tunjukan pada tamu tentang tempat anda"
+          subtitle="Tunjukan pada tamu tentang tempat anda maksimal 4 foto"
         />
         <ImageUpload
           value={img}
@@ -345,6 +345,7 @@ const RentModal = ({ districts }: RentModalProps) => {
           register={register}
           errors={errors}
           required
+          formatPrice
         />
       </div>
     );
