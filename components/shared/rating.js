@@ -1,0 +1,31 @@
+const ratings = [
+  { id: 1, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 5, comment: "sangat bagus" },
+  { id: 3, rating: 4, comment: "sangat bagus" },
+];
+
+function hitungRataRataRating(ratings) {
+  let totalRating = 0;
+  let jumlahData = 0;
+
+  for (let i = 0; i < ratings.length; i++) {
+    totalRating += ratings[i].rating;
+    jumlahData++;
+  }
+
+  const rataRata = totalRating / jumlahData;
+  return rataRata.toFixed(1);
+}
+
+const rataRataRating = hitungRataRataRating(ratings);
+console.log("Rata-rata rating:", rataRataRating);

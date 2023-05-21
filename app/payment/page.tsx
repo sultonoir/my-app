@@ -1,3 +1,4 @@
+import getResrvStatus from "@/components/actions/getResrvStatus";
 import getCurrentUser from "../../components/actions/getCurrentUser";
 import getReservations from "../../components/actions/getReservations";
 import EmptyState from "../../components/shared/EmptyState";
@@ -14,7 +15,7 @@ const TripsPage = async () => {
     );
   }
 
-  const reservation = await getReservations({ userId: currentUser.id });
+  const reservation = await getResrvStatus({ userId: currentUser.id });
 
   if (reservation.length === 0) {
     return (

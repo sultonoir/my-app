@@ -9,9 +9,10 @@ import Categories from "./Categories";
 
 interface navbarProps {
   currentUser: SafeUser | null;
+  notifications: any;
 }
 
-const navbar: React.FC<navbarProps> = ({ currentUser }) => {
+const navbar: React.FC<navbarProps> = ({ currentUser, notifications }) => {
   return (
     <div className="fixed w-full bg-white z-50 shadow-sm">
       <div className="py-4 border-b-[1px]">
@@ -19,7 +20,10 @@ const navbar: React.FC<navbarProps> = ({ currentUser }) => {
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
             <Logo />
             <Search />
-            <UserMenu currentUser={currentUser} />
+            <UserMenu
+              currentUser={currentUser}
+              notification={notifications}
+            />
           </div>
         </Container>
       </div>

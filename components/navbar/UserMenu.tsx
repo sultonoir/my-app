@@ -14,12 +14,16 @@ import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
 import { BiPlus, BiUser } from "react-icons/bi";
 import { MdOutlinePayments } from "react-icons/md";
+import { GoPrimitiveDot } from "react-icons/go";
+import { RxBell } from "react-icons/rx";
+import Notifications from "../shared/Notifications";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
+  notification: any;
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notification }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
@@ -48,11 +52,15 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           <BiPlus />
         </div>
-        <Menu.Button className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
+        <Notifications notification={notification} />
+        <Menu.Button className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition relative">
           <AiOutlineMenu />
           <div className="hidden md:block">
             <Avatar src={currentUser?.image} />
           </div>
+          <span className="animate-pulse absolute top-0 right-0 text-rose-500">
+            <GoPrimitiveDot size={20} />
+          </span>
         </Menu.Button>
       </div>
       <Transition
@@ -81,6 +89,22 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                         className="pr-2"
                       />
                       Paymet
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => router.push(`/reservations`)}
+                      className={`${
+                        active ? "bg-rose-500 text-white" : "text-primary"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      <RxBell
+                        size={24}
+                        className="pr-2"
+                      />
+                      Notifications
                     </button>
                   )}
                 </Menu.Item>

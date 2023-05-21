@@ -20,6 +20,8 @@ model Admin {
   listings        Listing[]
   reservations    Reservation[]
   user            User[]
+  rating          Rating[]
+  notifi          Notification[]
 }
 
 model User {
@@ -37,6 +39,8 @@ model User {
   accounts          Account[]
   listings          Listing[]
   reservations      Reservation[]
+  notifi            Notification[]
+  rating          Rating[]
   adminId           String?     @db.ObjectId
   admin             Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
@@ -80,6 +84,8 @@ model Listing {
   price           Int
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
   reservations    Reservation[]
+  notifi          Notification[]
+  rating          Rating[]
   adminId         String?     @db.ObjectId
   admin           Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
@@ -94,9 +100,35 @@ model Reservation {
   totalPrice      Int
   status          String?
   createdAt       DateTime @default(now())
+  notifi          Notification[]
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing         Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
   adminId         String?     @db.ObjectId
   admin           Admin?      @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
+}
+
+model Notification{
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String?        @db.ObjectId
+  listingId       String?        @db.ObjectId  
+  message         String
+  user            User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing         Listing?       @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  adminId         String?       @db.ObjectId
+  admin           Admin?        @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  reservationId   String?        @db.ObjectId
+  reservation     Reservation?   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+model Rating{
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  value           Int
+  userId          String?        @db.ObjectId
+  listingId       String?        @db.ObjectId  
+  message         String
+  user            User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing         Listing?       @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  adminId         String?       @db.ObjectId
+  admin           Admin?        @relation(fields: [adminId], references: [id], onDelete: Cascade)
 }

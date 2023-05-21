@@ -5,7 +5,7 @@ interface Iparams {
   reservationId: string;
 }
 const page = ({ params }: { params: Iparams }) => {
-  return <SuccessClient id={params.reservationId} />;
+  return <SuccessClient params={{ id: params.reservationId }} />;
 };
 
 export default page;
