@@ -120,7 +120,7 @@ export default function Modal({
                         disabled={disabled}
                         label={secondaryActionLabel}
                         onClick={handleSecondaryAction}
-                        outline
+                        outline={true}
                       />
                     )}
                     <Button

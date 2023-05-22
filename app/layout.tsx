@@ -9,8 +9,8 @@ import RentModal from "../components/modal/RentModal";
 import SearchModal from "../components/modal/SearchModal";
 import { Analytics } from "@vercel/analytics/react";
 import { getAllRegencies } from "territory-indonesia";
+import getResrvStatus from "@/components/actions/getResrvStatus";
 import getNotifications from "@/components/actions/getNotifications";
-import EmptyState from "@/components/shared/EmptyState";
 
 const font = Nunito({
   subsets: ["latin"],
@@ -36,7 +36,7 @@ export default async function RootLayout({
     latlng: [loc.latitude, loc.longitude],
   }));
 
-  const notifications = await getNotifications({ userId: currentUser?.id });
+  const notifications = await getNotifications({ authorId: currentUser?.id });
   return (
     <html lang="en">
       <head>

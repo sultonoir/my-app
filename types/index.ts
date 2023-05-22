@@ -1,6 +1,10 @@
-import { Listing, Reservation, User } from "@prisma/client";
+import { Listing, Reservation, User, Notification } from "@prisma/client";
 
 export type SafeListing = Omit<Listing, "createdAt"> & {
+  createdAt: string;
+};
+
+export type SafeNotifications = Omit<Notification, "createdAt"> & {
   createdAt: string;
 };
 

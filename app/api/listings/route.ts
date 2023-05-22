@@ -55,7 +55,10 @@ export async function POST(request: Request) {
     metadata: {
       userId: currentUser.id,
     },
-    default_price_data: price,
+    default_price_data: {
+      currency: "idr",
+      unit_amount: parseInt(price, 10),
+    },
   });
 
   return NextResponse.json(listing);

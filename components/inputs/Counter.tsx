@@ -8,10 +8,14 @@ type Props = {
   subtitle: string;
   value: number;
   onChange: (value: number) => void;
+  max?: number;
 };
 
-const Counter = ({ title, subtitle, value, onChange }: Props) => {
+const Counter = ({ title, subtitle, value, onChange, max }: Props) => {
   const onAdd = useCallback(() => {
+    if (value === max) {
+      return;
+    }
     onChange(value + 1);
   }, [onChange, value]);
 

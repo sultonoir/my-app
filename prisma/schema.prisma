@@ -99,6 +99,8 @@ model Reservation {
   endDate         DateTime
   totalPrice      Int
   status          String?
+  guestName       String?
+  guestImage      String?
   createdAt       DateTime @default(now())
   notifi          Notification[]
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -113,6 +115,9 @@ model Notification{
   userId          String?        @db.ObjectId
   listingId       String?        @db.ObjectId  
   message         String
+  guestName       String?
+  guestImage      String?
+  createdAt       DateTime       @default(now())
   user            User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing         Listing?       @relation(fields: [listingId], references: [id], onDelete: Cascade)
   adminId         String?       @db.ObjectId

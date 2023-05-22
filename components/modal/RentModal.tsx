@@ -21,8 +21,6 @@ import TextArea from "../inputs/TextArea";
 import Fasilitas, { facility } from "../shared/Fasilitas";
 import NearTour from "../shared/NearTour";
 import Image from "next/image";
-import BluredImage from "../shared/BluredImage";
-import AvatarCom from "../shared/Avatar";
 
 enum STEPS {
   TERM = 0,

@@ -79,6 +79,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
         listingId: listing?.id,
+        guestName: currentUser.name,
+        guestImage: currentUser.image,
         status: "pending",
       })
       .then(() => {

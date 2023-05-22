@@ -4,12 +4,12 @@ import Container from "../shared/Container";
 import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
-import { SafeUser } from "@/types";
+import { SafeNotifications, SafeReservation, SafeUser } from "@/types";
 import Categories from "./Categories";
 
 interface navbarProps {
   currentUser: SafeUser | null;
-  notifications: any;
+  notifications: SafeNotifications[];
 }
 
 const navbar: React.FC<navbarProps> = ({ currentUser, notifications }) => {
@@ -22,7 +22,7 @@ const navbar: React.FC<navbarProps> = ({ currentUser, notifications }) => {
             <Search />
             <UserMenu
               currentUser={currentUser}
-              notification={notifications}
+              notifications={notifications}
             />
           </div>
         </Container>

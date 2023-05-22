@@ -1,26 +1,41 @@
 import prisma from "@/libs/prisma";
+import { NextResponse } from "next/server";
 
 interface IParams {
+  listingId?: string;
   userId?: string;
+  authorId?: string;
 }
-
 export default async function getNotifications(params: IParams) {
-  const { userId } = params;
+  const { listingId, userId, authorId } = params;
+  const query: any = {};
 
-  const notifications = await prisma.notification.findMany({
-    where: {
-      listing: {
-        userId: userId,
+  if (listingId) {
+    query.listingId = listingId;
+  }
+
+  if (userId) {
+    query.userId = userId;
+  }
+
+  if (authorId) {
+    query.listing = { userId: authorId };
+  }
+
+  try {
+    const notifications = await prisma.notification.findMany({
+      where: query,
+      orderBy: {
+        createdAt: "desc",
       },
-    },
-    include: {
-      reservation: {
-        include: {
-          user: true,
-        },
-      },
-      listing: true,
-    },
-  });
-  return notifications;
+    });
+
+    const safenotifications = notifications.map((notif) => ({
+      ...notif,
+      createdAt: notif.createdAt.toISOString(),
+    }));
+    return safenotifications;
+  } catch (error) {
+    throw new Error();
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { SafeUser } from "@/types";
+import { SafeNotifications, SafeReservation, SafeUser } from "@/types";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
@@ -20,10 +20,10 @@ import Notifications from "../shared/Notifications";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
-  notification: any;
+  notifications: SafeNotifications[];
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notification }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notifications }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
@@ -52,15 +52,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notification }) => {
         >
           <BiPlus />
         </div>
-        <Notifications notification={notification} />
+        {currentUser && (
+          <Notifications
+            notifications={notifications}
+            currentUser={currentUser}
+          />
+        )}
         <Menu.Button className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition relative">
           <AiOutlineMenu />
           <div className="hidden md:block">
             <Avatar src={currentUser?.image} />
           </div>
-          <span className="animate-pulse absolute top-0 right-0 text-rose-500">
-            <GoPrimitiveDot size={20} />
-          </span>
         </Menu.Button>
       </div>
       <Transition

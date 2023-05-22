@@ -15,14 +15,6 @@ const ReservationsPage = async () => {
     );
   }
   const reservation = await getResrvStatus({ authorId: currentUser.id });
-  if (reservation.length === 0) {
-    return (
-      <EmptyState
-        title="Reservasi tidak ditemukan"
-        subtitle="Sepertinya Anda tidak memiliki reservasi di profil Anda"
-      />
-    );
-  }
   return (
     <ReservationsClient
       currentUser={currentUser}

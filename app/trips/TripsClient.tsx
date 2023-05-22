@@ -7,14 +7,19 @@ import { toast } from "react-hot-toast";
 import Container from "../../components/shared/Container";
 import Heading from "../../components/shared/Heading";
 import ListingCard from "../../components/listing/Listingcard";
+import EmptyState from "@/components/shared/EmptyState";
 interface TripsClientProps {
   reservations: SafeReservation[];
   currentUser: SafeUser | null;
+  completedByhost: SafeReservation[];
+  completed: SafeReservation[];
 }
 
 const TripsClient: React.FC<TripsClientProps> = ({
   reservations,
   currentUser,
+  completedByhost,
+  completed,
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
@@ -40,8 +45,8 @@ const TripsClient: React.FC<TripsClientProps> = ({
   return (
     <Container>
       <Heading
-        title="Trips"
-        subtitle="Where you've been and where you're going"
+        title="perjalanan"
+        subtitle="Di mana Anda berada dan ke mana Anda pergi"
       />
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
         {reservations.map((reservation) => {
@@ -54,6 +59,32 @@ const TripsClient: React.FC<TripsClientProps> = ({
               onAction={onCancel}
               disabled={deletingId === reservation.id}
               actionLabel="Cancel reservation"
+              currentUser={currentUser}
+              completed
+            />
+          );
+        })}
+      </div>
+      <div className="mt-2 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
+        {completedByhost.map((reservation) => {
+          return (
+            <ListingCard
+              key={reservation.id}
+              data={reservation.listing}
+              reservation={reservation}
+              currentUser={currentUser}
+              completed
+            />
+          );
+        })}
+      </div>
+      <div className="mt-2 grid grid-cols-1 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
+        {completed.map((reservation) => {
+          return (
+            <ListingCard
+              key={reservation.id}
+              data={reservation.listing}
+              reservation={reservation}
               currentUser={currentUser}
             />
           );

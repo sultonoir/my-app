@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/libs/prisma";
 import getCurrentUser from "@/components/actions/getCurrentUser";
@@ -12,7 +12,8 @@ export async function POST(request: Request) {
     totalPrice,
     status,
     userId,
-    adminCost,
+    guestName,
+    guestImage,
   } = body;
 
   if (
@@ -21,7 +22,9 @@ export async function POST(request: Request) {
     !endDate ||
     !totalPrice ||
     !status ||
-    !userId
+    !userId ||
+    !guestName ||
+    !guestImage
   ) {
     return NextResponse.error();
   }
@@ -38,6 +41,8 @@ export async function POST(request: Request) {
           endDate,
           totalPrice,
           status,
+          guestName,
+          guestImage,
         },
       },
     },
@@ -56,6 +61,14 @@ export const PUT = async (request: Request) => {
     if (!status || !reservationId) {
       return NextResponse.json({ message: "Tidak ada status" });
     }
+    const reservation = await prisma.reservation.findUnique({
+      where: {
+        id: reservationId,
+      },
+    });
+    if (!reservation) {
+      return NextResponse.error();
+    }
 
     await prisma.reservation.update({
       where: {
@@ -63,13 +76,15 @@ export const PUT = async (request: Request) => {
       },
       data: {
         status,
-        notifi: {
-          create: {
-            message: "Membuat Reservasi",
-          },
-        },
         listing: {
           update: {
+            notifi: {
+              create: {
+                message: "Mereservasi",
+                guestName: currentUser.name,
+                guestImage: currentUser.image,
+              },
+            },
             user: {
               update: {
                 notification: true,

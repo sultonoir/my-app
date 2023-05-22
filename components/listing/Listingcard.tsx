@@ -15,6 +15,10 @@ import HearthButton from "../shared/HeartButton";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import useRatingsModal from "@/hooks/useRatings";
+import RatingsModal from "../modal/RatingsModal";
+import ButtonConfirm from "../shared/ButtonConfrim";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -24,10 +28,12 @@ interface ListingCardProps {
   actionLabel?: string;
   actionId?: string;
   currentUser?: SafeUser | null;
-  name?: string | null | undefined;
+  guest?: boolean;
   properties?: boolean;
   countdown?: boolean;
   payment?: boolean;
+  completed?: boolean;
+  host?: boolean;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -38,10 +44,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionLabel,
   actionId = "",
   currentUser,
-  name,
+  guest,
   properties,
   countdown,
   payment,
+  completed,
+  host,
 }) => {
   const newData = {
     ...data,
@@ -116,6 +124,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   };
 
   const onCreateReservation = useCallback(() => {
+    setIsLoading(true);
     axios
       .post("api/payment", {
         totalPrice: reservation?.totalPrice,
@@ -133,6 +142,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
       })
       .catch(() => {
         toast.error("Something went wrong.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [reservation?.totalPrice, reservation?.listing.title]);
 
@@ -143,8 +155,75 @@ const ListingCard: React.FC<ListingCardProps> = ({
     return "Hentikan layanan";
   }, [data.status]);
 
+  const ratingModal = useRatingsModal();
+  const onCompByHost = useCallback(() => {
+    setIsLoading(true);
+    axios
+      .put("api/reservations", {
+        status: "completedByhost",
+        reservationId: reservation?.id,
+      })
+      .then((e) => {
+        toast.success("reservations selesai");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [reservation?.status]);
+
+  const onCompleted = useCallback(() => {
+    if (reservation?.status === "success") {
+      setIsLoading(true);
+      axios
+        .put("api/reservations", {
+          status: "completed",
+          reservationId: reservation?.id,
+        })
+        .then(() => {
+          toast.success("Menyelesaikan reservasi");
+          ratingModal.onOpen();
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+    if (reservation?.status === "completedByhost") {
+      setIsLoading(true);
+      axios
+        .put("api/reservations", {
+          status: "completed",
+          reservationId: reservation?.id,
+        })
+        .then((e) => {
+          ratingModal.onOpen();
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [reservation?.status]);
+
+  const labelCompletd = useMemo(() => {
+    if (reservation?.status === "success") {
+      return "Konfirmasi Selesai";
+    }
+    if (reservation?.status === "completedByhost") {
+      return "Berikan penilaian";
+    }
+  }, [reservation?.status]);
+
   return (
     <div className="relative">
+      <RatingsModal listingId={data.id} />
       <Link
         href={`/listings/${data.id}`}
         className="col-span-1 cursor-pointer group"
@@ -198,7 +277,22 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <GrLocation color="grey" />
             {data.locationValue}
           </div>
-
+          {guest && (
+            <div className="flex flex-row gap-2">
+              <span className="w-10 h-10">
+                <Image
+                  alt="Avatar"
+                  width={40}
+                  height={40}
+                  src={reservation?.guestImage || `/placeholder.jpg`}
+                  className="rounded-full aspect-square"
+                />
+              </span>
+              <p className="font-light text-neutral-500">
+                {reservation?.guestName}
+              </p>
+            </div>
+          )}
           <div className="font-light text-neutral-500">
             {reservationDate || data.category}
           </div>
@@ -234,10 +328,33 @@ const ListingCard: React.FC<ListingCardProps> = ({
         )}
         {payment && (
           <div className="mt-2">
-            <Button
+            <ButtonConfirm
               onClick={onCreateReservation}
               small
               label="bayar"
+              disabled={isLoading}
+            />
+          </div>
+        )}
+        {completed && (
+          <div className="mt-2">
+            <ButtonConfirm
+              confirm
+              onClick={onCompleted}
+              small
+              label={labelCompletd}
+              disabled={isLoading}
+            />
+          </div>
+        )}
+        {host && (
+          <div className="mt-2">
+            <ButtonConfirm
+              confirm
+              onClick={onCompByHost}
+              small
+              label="Selesaika reservasi"
+              disabled={isLoading}
             />
           </div>
         )}

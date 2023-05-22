@@ -8,6 +8,7 @@ import Heading from "../../components/shared/Heading";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ListingCard from "../../components/listing/Listingcard";
+import EmptyState from "@/components/shared/EmptyState";
 
 interface ReservationsClientProps {
   currentUser: SafeUser | null;
@@ -18,6 +19,14 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   currentUser,
   reservations,
 }) => {
+  if (reservations.length === 0) {
+    return (
+      <EmptyState
+        title="Reservasi tidak ditemukan"
+        subtitle="Sepertinya Anda tidak memiliki reservasi di profil Anda"
+      />
+    );
+  }
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
   const onCancel = useCallback(
@@ -56,6 +65,9 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
             onAction={onCancel}
             disabled={deletingId === reservation.id}
             actionLabel="Cancel guest reservation"
+            currentUser={currentUser}
+            guest
+            host
           />
         ))}
       </div>
