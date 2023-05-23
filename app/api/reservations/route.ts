@@ -23,8 +23,7 @@ export async function POST(request: Request) {
     !totalPrice ||
     !status ||
     !userId ||
-    !guestName ||
-    !guestImage
+    !guestName
   ) {
     return NextResponse.error();
   }
