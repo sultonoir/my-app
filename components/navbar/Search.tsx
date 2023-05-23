@@ -16,13 +16,15 @@ const Search = () => {
   const endDate = params?.get("endDate");
   const guestCount = params?.get("guestCount");
 
-  const locationValue = params?.get("locationValue");
   const [coordinate, setCoordinate] = useState<any>("Anywhere");
+  const locationValue = params?.get("locationValue");
 
   useEffect(() => {
     const fetch = async () => {
-      const cities = await getRegencyByName(locationValue);
-      setCoordinate(cities.name);
+      if (typeof locationValue === "string") {
+        const cities = await getRegencyByName(locationValue);
+        setCoordinate(cities.name);
+      }
     };
     fetch();
   }, [locationValue]);
@@ -36,14 +38,14 @@ const Search = () => {
       if (dif === 0) {
         dif = 1;
       }
-      return `${dif} days`;
+      return `${dif} hari`;
     }
     return "Minggu manapun";
   }, [startDate, endDate]);
 
   const gusetLabel = useMemo(() => {
     if (guestCount) {
-      return `${guestCount} Guest`;
+      return `${guestCount} tamu`;
     }
     return "Tambahkan tamu";
   }, [guestCount]);
