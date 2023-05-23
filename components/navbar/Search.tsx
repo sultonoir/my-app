@@ -69,7 +69,7 @@ const Search = () => {
           </div>
         </div>
       </div>
-      <div className="border border-neutral-200 hover:shadow-md transition cursor-pointer rounded-full md:hidden p-4">
+      <div className="border border-neutral-200 hover:shadow-md transition cursor-pointer rounded-full md:hidden p-3">
         <BiSearch size={18} />
       </div>
     </>

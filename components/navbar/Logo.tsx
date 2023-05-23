@@ -6,12 +6,12 @@ import Link from "next/link";
 const Logo = () => {
   return (
     <Link href={"/"}>
-      <span className="w-[52px] h-[52px] block">
+      <span className="w-[40px] h-[40px] block">
         <Image
           src={`/logo.svg`}
-          height={50}
+          height={40}
           priority
-          width={50}
+          width={40}
           className="block cursor-pointer rounded-full"
           alt="logo"
         />
