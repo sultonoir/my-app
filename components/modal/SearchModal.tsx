@@ -131,8 +131,8 @@ const SearchModal = ({ districts }: SearchModalProps) => {
   let bodyContent = (
     <div className="flex flex-col gap-8">
       <Heading
-        title="Where do you wanna go?"
-        subtitle="Find the perfect location!"
+        title="Kemana kamu mau pergi?"
+        subtitle="Temukan lokasi yang sempurna!"
       />
       <CountrySelect
         districts={districts}
@@ -148,8 +148,8 @@ const SearchModal = ({ districts }: SearchModalProps) => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="When do you plan to go?"
-          subtitle="Make sure everyone is free!"
+          title="Kapan Anda berencana untuk pergi?"
+          subtitle="Tentukan waktu untuk pergi"
         />
         <Calendar
           onChange={(value) => setDateRange(value.selection)}
@@ -163,8 +163,8 @@ const SearchModal = ({ districts }: SearchModalProps) => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="More information"
-          subtitle="Find your perfect place!"
+          title="Informasi lebih lanjut"
+          subtitle="Temukan tempat sempurna Anda!"
         />
         <Counter
           onChange={(value) => setAdult(value)}
@@ -188,8 +188,8 @@ const SearchModal = ({ districts }: SearchModalProps) => {
         <Counter
           onChange={(value) => setRoomCount(value)}
           value={roomCount}
-          title="Rooms"
-          subtitle="How many rooms do you need?"
+          title="Kamar"
+          subtitle="Berapa banyak kamar yang Anda butuhkan?"
         />
         <hr />
         <Counter
@@ -197,8 +197,8 @@ const SearchModal = ({ districts }: SearchModalProps) => {
             setBathroomCount(value);
           }}
           value={bathroomCount}
-          title="Bathrooms"
-          subtitle="How many bahtrooms do you need?"
+          title="Kamar mandi"
+          subtitle="Berapa banyak kamar mandi yang Anda butuhkan?"
         />
       </div>
     );

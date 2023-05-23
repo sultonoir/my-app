@@ -51,7 +51,7 @@ const RegisterModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading
-        title="Selamat datang di tabibito"
+        title="Selamat datang di kyouka"
         subtitle="Buat sebuah akun"
       />
       <Input

@@ -83,7 +83,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
     <div className="col-span-4 flex flex-col gap-5">
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-2">
-          <div className="text-xl font-semibold capitalize flex flex-col md:flex-row">
+          <div className="text-xl font-semibold capitalize flex flex-col lg:flex-row">
             <p>{title}.</p>
             <p>Tuan rumah {user?.name}</p>
           </div>

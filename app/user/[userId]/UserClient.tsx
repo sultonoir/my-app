@@ -36,8 +36,7 @@ const UserClient: React.FC<UserClientProps> = ({ user }) => {
             {user?.name}
           </h1>
           <p className="text-neutral-500 font-light text-justify indent-5 max-w-sm">
-            {user?.description ||
-              "Orang ini sangat malas dan tidak menulis biografi apapun."}
+            {user?.description || "Anda belum membuat deskripsi"}
           </p>
         </div>
       </div>

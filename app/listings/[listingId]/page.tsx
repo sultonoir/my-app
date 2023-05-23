@@ -9,13 +9,12 @@ interface Iparams {
   listingId?: string;
 }
 
-export const metadata = async ({ params }: { params: Iparams }) => {
-  const listing = await getLIstingById(params);
+export async function generateMetadata({ params }: { params: Iparams }) {
+  const user = await getLIstingById(params);
   return {
-    title: listing?.title,
-    description: listing?.description,
+    title: user?.title,
   };
-};
+}
 
 export interface latlngProp {
   latlng: number[];

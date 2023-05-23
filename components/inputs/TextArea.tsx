@@ -20,7 +20,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   return (
     <textarea
-      maxLength={300}
+      maxLength={500}
       id={id}
       placeholder={label}
       disabled={disabled}
@@ -28,7 +28,7 @@ const TextArea: React.FC<TextAreaProps> = ({
       className={`
         ${errors[id] ? "border-rose-500" : ""}
         ${errors[id] ? "focus:border-rose-500" : ""}
-        border border-info w-full h-80`}
+        border border-info w-full h-80 p-2`}
     />
   );
 };

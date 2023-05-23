@@ -14,8 +14,9 @@ import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
 import { BiPlus, BiUser } from "react-icons/bi";
 import { MdOutlinePayments } from "react-icons/md";
-import { RxBell } from "react-icons/rx";
+import { RiCalendarCheckLine } from "react-icons/ri";
 import Notifications from "../shared/Notifications";
+import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
@@ -101,11 +102,27 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notifications }) => {
                         active ? "bg-rose-500 text-white" : "text-primary"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
-                      <RxBell
+                      <RiCalendarCheckLine
                         size={24}
                         className="pr-2"
                       />
-                      Notifications
+                      Reservations
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => router.push(`/trips`)}
+                      className={`${
+                        active ? "bg-rose-500 text-white" : "text-primary"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      <HiOutlinePaperAirplane
+                        size={24}
+                        className="pr-2"
+                      />
+                      Perjalanan
                     </button>
                   )}
                 </Menu.Item>
