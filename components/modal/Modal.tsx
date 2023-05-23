@@ -129,16 +129,7 @@ export default function Modal({
                       onClick={handleSubmit}
                     />
                   </div>
-                  <div className="mt-2 flex flex-col">
-                    {footer && (
-                      <div className="flex justify-center items-center">
-                        <div className="border-t border-gray-400 w-full"></div>
-                        <div className="mx-3">or</div>
-                        <div className="border-t border-gray-400 w-full"></div>
-                      </div>
-                    )}
-                    {footer}
-                  </div>
+                  <div className="mt-2 flex flex-col">{footer}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

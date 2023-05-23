@@ -4,6 +4,7 @@ import { shootFireworks } from "@/libs/succes";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "react-hot-toast";
 
@@ -29,6 +30,8 @@ const SuccessClient = ({ params }: { params: Iparams }) => {
       })
       .finally();
   }, []);
+
+  const router = useRouter();
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -59,7 +62,10 @@ const SuccessClient = ({ params }: { params: Iparams }) => {
               Terima kasih atas pembayaran Anda. Transaksi Anda telah berhasil
               diproses.
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-md mt-4 focus:outline-none">
+            <button
+              onClick={() => router.push("/trips")}
+              className="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-md mt-4 focus:outline-none"
+            >
               Kembali ke Halaman Utama
             </button>
           </div>

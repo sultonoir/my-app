@@ -7,12 +7,29 @@ interface Iparams {
 export default async function getLIstingById(params: Iparams) {
   try {
     const { listingId } = params;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: listingId,
+      },
+    });
+
+    if (user?.notification) {
+      await prisma.user.update({
+        where: {
+          id: listingId,
+        },
+        data: {
+          notification: false,
+        },
+      });
+    }
     const listing = await prisma.listing.findUnique({
       where: {
         id: listingId,
       },
       include: {
         user: true,
+        rating: true,
       },
     });
 

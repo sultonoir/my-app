@@ -3,6 +3,12 @@ import getCurrentUser from "../../components/actions/getCurrentUser";
 import getReservations from "../../components/actions/getReservations";
 import EmptyState from "../../components/shared/EmptyState";
 import ReservationsClient from "./ReservationsClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Reservasi",
+  description: "Daftar reservasi anda",
+};
 
 const ReservationsPage = async () => {
   const currentUser = await getCurrentUser();

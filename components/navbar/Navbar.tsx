@@ -18,8 +18,10 @@ const navbar: React.FC<navbarProps> = ({ currentUser, notifications }) => {
       <div className="py-4 border-b-[1px]">
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
-            <Logo />
-            <Search />
+            <span className="flex gap-2 items-center">
+              <Logo />
+              <Search />
+            </span>
             <UserMenu
               currentUser={currentUser}
               notifications={notifications}

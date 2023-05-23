@@ -1,17 +1,8 @@
 const ratings = [
-  { id: 1, rating: 4, comment: "sangat bagus" },
+  { id: 1, rating: 5, comment: "sangat bagus" },
   { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
   { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
-  { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
-  { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
-  { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
-  { id: 2, rating: 5, comment: "sangat bagus" },
-  { id: 3, rating: 4, comment: "sangat bagus" },
+  { id: 2, rating: 2, comment: "sangat bagus" },
 ];
 
 function hitungRataRataRating(ratings) {
@@ -24,7 +15,7 @@ function hitungRataRataRating(ratings) {
   }
 
   const rataRata = totalRating / jumlahData;
-  return rataRata.toFixed(1);
+  return rataRata;
 }
 
 const rataRataRating = hitungRataRataRating(ratings);

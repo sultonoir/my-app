@@ -2,6 +2,12 @@ import getResrvStatus from "@/components/actions/getResrvStatus";
 import getCurrentUser from "../../components/actions/getCurrentUser";
 import EmptyState from "../../components/shared/EmptyState";
 import TripsClient from "./TripsClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Perjalanan",
+  description: "Daftar perjalanan anda",
+};
 
 const TripsPage = async () => {
   const currentUser = await getCurrentUser();

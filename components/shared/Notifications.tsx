@@ -21,7 +21,7 @@ export default function Notifications({
       className="relative inline-block text-left"
     >
       <div>
-        <Menu.Button className="hidden md:block text-sm font-semibold p-3 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+        <Menu.Button className="p-3 border border-neutral-200 hover:shadow-md transition cursor-pointer rounded-full">
           <span className="relative">
             <RxBell
               size={20}
@@ -82,7 +82,10 @@ export default function Notifications({
                           </span>
                           <div className="flex flex-col gap-1">
                             <p className="font-semibold text-neutral-800 ">
-                              {notif.guestName}.{notif.message}
+                              {notif.guestName}
+                            </p>
+                            <p className="font-semibold text-neutral-800 ">
+                              {notif.message}
                             </p>
                           </div>
                         </div>

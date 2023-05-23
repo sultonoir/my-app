@@ -39,13 +39,17 @@ const CategoryBox = ({ icon: Icon, label, seleted }: Props) => {
     <div
       onClick={handleClick}
       className={`
-      flex flex-col items-center justify-center gap-2p3
+      flex flex-col flex-wrap items-center justify-center gap-2p3
       border-b-2 hover:text-neutral-800 transition cursor-pointer
-      ${seleted ? "border-b-neutral-800 text-neutral-800" : " border-transparent text-neutral-500"}
+      ${
+        seleted
+          ? "border-b-neutral-800 text-neutral-800"
+          : " border-transparent text-neutral-500"
+      }
   `}
     >
       <Icon size={26} />
-      <div className="font-medium text-sm">{label}</div>
+      <div className="font-medium text-sm whitespace-nowrap">{label}</div>
     </div>
   );
 };

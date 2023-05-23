@@ -2,7 +2,7 @@
 
 import ChangPassModal from "@/components/modal/ChangPassModal";
 import ChangeProfileModal from "@/components/modal/ChangeProfileModal";
-import AvatarCom from "@/components/shared/Avatar";
+import AvatarCom from "@/components/shared/AvatarCom";
 import Container from "@/components/shared/Container";
 import EditProfile from "@/components/shared/EditProfile";
 import { SafeListing, SafeUser } from "@/types";

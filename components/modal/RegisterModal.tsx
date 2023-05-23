@@ -1,7 +1,5 @@
 "use client";
 import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { useCallback, useState } from "react";
@@ -9,8 +7,6 @@ import Modal from "./Modal";
 import Heading from "../shared/Heading";
 import Input from "../inputs/Input";
 import { toast } from "react-hot-toast";
-import Button from "../shared/Button";
-import { signIn } from "next-auth/react";
 import useLoginModal from "@/hooks/useLoginModal";
 
 const RegisterModal = () => {
@@ -55,21 +51,21 @@ const RegisterModal = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading
-        title="welcome to Kyouka"
-        subtitle="Create an account"
+        title="Selamat datang di tabibito"
+        subtitle="Buat sebuah akun"
       />
       <Input
-        id="email"
-        type="email"
-        label="email"
+        id="name"
+        label="Name"
         disabled={isloading}
         register={register}
         errors={errors}
         required
       />
       <Input
-        id="name"
-        label="Name"
+        id="email"
+        type="email"
+        label="email"
         disabled={isloading}
         register={register}
         errors={errors}
@@ -89,18 +85,6 @@ const RegisterModal = () => {
 
   const footerContent = (
     <div className="flex flex-col gap-3 mt-3">
-      <Button
-        outline
-        label="Continue with google"
-        icon={FcGoogle}
-        onClick={() => signIn("google")}
-      />
-      <Button
-        outline
-        label="Continue with github"
-        icon={AiFillGithub}
-        onClick={() => signIn("github")}
-      />
       <div className="mt-4 text-neutral-500 text-center font-light">
         <div className="flex flex-row items-center gap-2 justify-center">
           <div>All ready have an account ?</div>

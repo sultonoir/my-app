@@ -9,6 +9,14 @@ interface Iparams {
   listingId?: string;
 }
 
+export const metadata = async ({ params }: { params: Iparams }) => {
+  const listing = await getLIstingById(params);
+  return {
+    title: listing?.title,
+    description: listing?.description,
+  };
+};
+
 export interface latlngProp {
   latlng: number[];
 }

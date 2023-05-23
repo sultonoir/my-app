@@ -3,96 +3,89 @@ import { TbBeach, TbMountain, TbPool } from "react-icons/tb";
 import {
   GiBarn,
   GiBoatFishing,
-  GiCactus,
-  GiCastle,
   GiCaveEntrance,
   GiForestCamp,
   GiIsland,
-  GiWindmill,
+  GiModernCity,
+  GiVillage,
 } from "react-icons/gi";
-import { FaSkiing } from "react-icons/fa";
-import { BsSnow } from "react-icons/bs";
 import { IoDiamond } from "react-icons/io5";
-import { MdOutlineVilla } from "react-icons/md";
+import { MdOutlineVilla, MdVilla } from "react-icons/md";
 import Container from "../shared/Container";
 import CategoryBox from "../shared/CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
+import { HiOutlineHomeModern } from "react-icons/hi2";
 
 export const categories = [
   {
-    label: "Beach",
+    label: "Tepi pantai",
     icon: TbBeach,
-    description: "This property is close to the beach!",
+    description: "Properti ini berada di pusat dekat pantai",
   },
   {
-    label: "Windmills",
-    icon: GiWindmill,
-    description: "This property is has windmills!",
+    label: "Pusat kota",
+    icon: GiModernCity,
+    description: "Properti ini berada di pusat kota",
   },
   {
-    label: "Modern",
+    label: "Pedesaan",
+    icon: GiVillage,
+    description: "Properti ini berada dipedesaan",
+  },
+  {
+    label: "Rumah",
+    icon: HiOutlineHomeModern,
+    description: "Properti ini berada dipedesaan!",
+  },
+  {
+    label: "Villa",
     icon: MdOutlineVilla,
-    description: "This property is modern!",
+    description: "Properti ini memiliki villa keren!",
   },
   {
-    label: "Countryside",
+    label: "Pegunungan",
     icon: TbMountain,
-    description: "This property is in the countryside!",
+    description: "Properti ini memiliki pemandangan pegunungan",
   },
   {
-    label: "Pools",
+    label: "Kolam renang",
     icon: TbPool,
-    description: "This is property has a beautiful pool!",
+    description: "Properti ini memiliki kolam yang indah!",
   },
   {
-    label: "Islands",
+    label: "Pulau",
     icon: GiIsland,
-    description: "This property is on an island!",
+    description: "Properti ini berada di sebuah pulau!",
   },
   {
-    label: "Lake",
+    label: "Tepi danau",
     icon: GiBoatFishing,
-    description: "This property is near a lake!",
+    description: "Properti ini berada di dekat danau!",
   },
   {
-    label: "Skiing",
-    icon: FaSkiing,
-    description: "This property has skiing activies!",
+    label: "Mansion",
+    icon: MdVilla,
+    description: "Properti ini mansion keren!",
   },
   {
-    label: "Castles",
-    icon: GiCastle,
-    description: "This property is an ancient castle!",
-  },
-  {
-    label: "Caves",
+    label: "Goa",
     icon: GiCaveEntrance,
-    description: "This property is in a spooky cave!",
+    description: "Properti ini berada di goa",
   },
   {
     label: "Camping",
     icon: GiForestCamp,
-    description: "This property offers camping activities!",
+    description: "Properti ini menawarkan kegiatan berkemah!",
   },
   {
-    label: "Arctic",
-    icon: BsSnow,
-    description: "This property is in arctic environment!",
-  },
-  {
-    label: "Desert",
-    icon: GiCactus,
-    description: "This property is in the desert!",
-  },
-  {
-    label: "Barns",
+    label: "Lumbung",
     icon: GiBarn,
-    description: "This property is in a barn!",
+    description: "Properti ini ada di lumbung!",
   },
   {
-    label: "Lux",
+    label: "luxury",
     icon: IoDiamond,
-    description: "This property is brand new and luxurious!",
+    description: "Properti ini baru dan mewah!",
   },
 ];
 

@@ -1,7 +1,13 @@
+import { Metadata } from "next";
 import getCurrentUser from "../../components/actions/getCurrentUser";
 import getFavotiteListing from "../../components/actions/getFavoriteListing";
 import EmptyState from "../../components/shared/EmptyState";
 import FavoritesClient from "./FavoritesClient";
+
+export const metadata: Metadata = {
+  title: "Favorit",
+  description: "Buat daftar favorit pertama Anda",
+};
 
 const favoriteListing = async () => {
   const listings = await getFavotiteListing();

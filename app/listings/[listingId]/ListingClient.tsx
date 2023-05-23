@@ -15,6 +15,7 @@ import { categories } from "@/components/navbar/Categories";
 import ListingHead from "@/components/listing/ListingHead";
 import ListingInfo from "@/components/listing/ListingInfo";
 import ListingReservation from "@/components/listing/ListingReservation";
+import { Rating } from "@prisma/client";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -26,6 +27,7 @@ interface ListingClientProps {
   reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
+    rating: Rating[];
   };
   currentUser?: SafeUser | null;
 }
@@ -36,11 +38,14 @@ const ListingClient: React.FC<ListingClientProps> = ({
   currentUser,
 }) => {
   const loginModal = useLoginModal();
+
   const router = useRouter();
+
   const newData = {
     ...listing,
     imageSrc: listing.imageSrc.map((src) => ({ name: src })),
     fasilitas: listing.fasilitas.map((src) => ({ item: src })),
+    NearestTour: listing.NearestTour.map((src) => ({ item: src })),
   };
 
   const disabledDates = useMemo(() => {
@@ -84,7 +89,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         status: "pending",
       })
       .then(() => {
-        toast.success("Listing reserved!");
+        toast.success("Berhasil mereservasi");
         setDateRange(initialDateRange);
         router.push("/payment");
       })
@@ -144,6 +149,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
               fasilitas={newData.fasilitas}
               title={listing.title}
               id={listing.id}
+              rating={listing.rating}
+              nearest={newData.NearestTour}
             />
             <div
               className="

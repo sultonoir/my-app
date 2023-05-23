@@ -167,7 +167,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       <div className="flex flex-col gap-8">
         <Heading
           title="Pilih kategory "
-          subtitle="category yang menggambarkan kamar anda"
+          subtitle="category yang menggambarkan temapat anda"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
           {categories.map((item) => (
@@ -193,7 +193,7 @@ const RentModal = ({ districts }: RentModalProps) => {
       <div className="flex flex-col gap-8">
         <Heading
           title="Dikota mana tempat"
-          subtitle="Help guest find you!"
+          subtitle="Bantu tamu untuk menemukan tempatmu"
         />
         <CountrySelect
           districts={districts}

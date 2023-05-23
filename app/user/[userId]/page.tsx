@@ -8,6 +8,14 @@ interface Iparams {
   userId: string;
 }
 
+export const generateMetadata = async () => {
+  const user = await getCurrentUser();
+  return {
+    title: user?.name,
+    description: user?.description,
+  };
+};
+
 const page = async ({ params }: { params: Iparams }) => {
   const currentUser = await getCurrentUser();
 

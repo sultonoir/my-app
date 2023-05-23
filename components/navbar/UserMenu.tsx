@@ -14,7 +14,6 @@ import Avatar from "../shared/Avatar";
 import useRentModal from "@/hooks/useRentModal";
 import { BiPlus, BiUser } from "react-icons/bi";
 import { MdOutlinePayments } from "react-icons/md";
-import { GoPrimitiveDot } from "react-icons/go";
 import { RxBell } from "react-icons/rx";
 import Notifications from "../shared/Notifications";
 
@@ -50,7 +49,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notifications }) => {
           onClick={rentModal.onOpen}
           className="md:hidden p-3 border border-neutral-200 hover:shadow-md transition cursor-pointer rounded-full"
         >
-          <BiPlus />
+          <BiPlus size={20} />
         </div>
         {currentUser && (
           <Notifications
@@ -58,8 +57,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser, notifications }) => {
             currentUser={currentUser}
           />
         )}
-        <Menu.Button className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition relative">
-          <AiOutlineMenu />
+        <Menu.Button className="p-3 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition relative">
+          <AiOutlineMenu size={20} />
           <div className="hidden md:block">
             <Avatar src={currentUser?.image} />
           </div>
