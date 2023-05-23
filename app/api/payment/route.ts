@@ -5,8 +5,8 @@ export async function POST(request: Request) {
   const body = await request.json();
   const { totalPrice, title, image, userId, reservationId } = body;
   try {
-    const successUrl = `/success/${reservationId}`;
-    const cancelUrl = `/payment`;
+    const successUrl = `https://kyouka.vercel.app/success/${reservationId}`;
+    const cancelUrl = `https://kyouka.vercel.app/payment`;
 
     const checkoutSession = await stripe.checkout.sessions.create({
       line_items: [
