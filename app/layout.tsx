@@ -19,8 +19,9 @@ const font = Nunito({
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Airbnb Clone",
-  description: "Airbnb Clone",
+  title: "KyOuka",
+  description:
+    "KyOuka adalah platform daring yang memungkinkan orang untuk menyewakan properti atau kamar tidur mereka kepada wisatawan atau tamu yang mencari tempat menginap sementara. Dengan menggunakan KyOuka, pemilik properti dapat mempromosikan ruang mereka, menetapkan harga, dan menyediakan informasi tentang fasilitas yang tersedia. Di sisi lain, para pengguna KyOuka dapat mencari dan memesan akomodasi sesuai dengan preferensi mereka, baik untuk liburan, perjalanan bisnis, atau tujuan lainnya.",
 };
 
 export default async function RootLayout({
