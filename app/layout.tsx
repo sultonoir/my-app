@@ -57,8 +57,10 @@ export default async function RootLayout({
         <LoginModal />
         <RegisterModal />
         <RentModal districts={districts} />
-        <div className="pb-20 pt-28">{children}</div>
-        <Analytics />
+        <div className="pb-20 pt-28">
+          {children}
+          <Analytics />
+        </div>
       </body>
     </html>
   );
